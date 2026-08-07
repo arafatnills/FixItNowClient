@@ -4,6 +4,8 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/shared/Navbar";
 import { ThemeProvider } from "@/components/shared/theme-provider";
+import GlowTheme from "@/components/shared/GlowTheme";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -37,12 +39,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       )}
     >
       <body className="min-h-full flex flex-col">
+        
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <GlowTheme/>
+            <Toaster position="top-right"/>
           <Navbar />
           {children}
         </ThemeProvider>

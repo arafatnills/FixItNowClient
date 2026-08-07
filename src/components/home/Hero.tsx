@@ -2,10 +2,7 @@ import { HeroSearch } from "./HeroSearch";
 
 const Hero = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-background py-10 md:py-22 lg:py-32 flex items-center justify-center min-h-[calc(100vh-4rem)]">
-      {/* Background Glow Effect (Fixed the blur issue) */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 bg-teal-600/20 dark:bg-teal-600/20 rounded-full blur-[160px]" />
-
+    <section className="relative w-full overflow-hidden py-10 md:py-22 lg:py-32 flex items-center justify-center min-h-[calc(100vh-4rem)]">
       <div className="container px-4 md:px-6 flex flex-col items-center text-center max-w-4xl mx-auto space-y-8 z-10">
         {/* Responsive Heading */}
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
