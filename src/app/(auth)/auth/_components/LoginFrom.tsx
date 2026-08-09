@@ -5,23 +5,25 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-
 import { Spinner } from "@/components/ui/spinner";
 import { loginAction } from "../_actions/login";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const [state, action, pending] = useActionState(loginAction, false);
+  const router = useRouter();
   useEffect(() => {
     if (!state) return;
     if (state.success) {
       toast.success(state.message || "login successfully");
+      router.push("/dashboard");
     }
     if (!state.success) {
       toast.error(state.error || "login failed");
     }
-  }, [state]);
+  }, [state, router]);
   return (
     <form className="w-full max-w-105" action={action}>
       <Card className="p-6 sm:p-8 shadow-lg border-teal-600/10 dark:border-teal-500/20 space-y-6">

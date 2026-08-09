@@ -11,15 +11,58 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ModeToggle } from "./ModeToggle";
 
-export default function Navbar() {
-  // TODO: Replace with your actual auth state from Context/Redux/Zustand
-  const user = {
-    isLoggedIn: false,
-    name: "Arafat Nill",
-    role: "TECHNICIAN",
+
+import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ModeToggle } from "./MobileToggle";
+import { logout } from "@/services/logout";
+
+type IUser = {
+  success: boolean;
+  status: number;
+  message: string;
+  data: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    profile: {
+      id: string;
+      userId: string;
+      yearsOfExperience: number | null;
+      bio: string | null;
+      certificates: string[];
+      createdAt: string;
+      updatedAt: string;
+    };
   };
+};
+
+type NavbarProps = {
+  user: IUser;
+};
+
+export default function Navbar({ user }: NavbarProps) {
+  const [isLogout, setIsLogOut] = useState(false)
+  const router = useRouter()
+  const handelLogOut = async (action: string) => {
+    if (action === "logout") {
+      await logout();
+      setIsLogOut(true)
+    }
+  };
+
+  useEffect(() => {
+    if (isLogout) {
+      toast.success("logout successfully");
+      router.push('/auth/login')
+    }
+  }, [isLogout, router]);
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/5 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -45,9 +88,9 @@ export default function Navbar() {
           >
             Categories
           </Link>
-          {user.isLoggedIn && (
+          {user && (
             <Link
-              href="/dashboard"
+              href="/dashboard/customer"
               className="hover:text-foreground transition-colors"
             >
               Dashboard
@@ -59,7 +102,7 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {/* Right Side: Auth / Profile */}
           <ModeToggle />
-          {!user.isLoggedIn ? (
+          {user.success === false ? (
             <>
               <Button variant="ghost" asChild className="rounded-sm">
                 <Link href="/auth/login">Log in</Link>
@@ -81,10 +124,14 @@ export default function Navbar() {
                   <Avatar className="h-8 w-8">
                     <AvatarImage
                       src="/placeholder-avatar.jpg"
-                      alt={user.name}
+                      alt={user.data?.name}
                     />
                     <AvatarFallback className="bg-teal-100 text-teal-800">
-                      {user.name.charAt(0)}
+                      {user.data?.name
+                        ?.match(/\b\w/g)
+                        ?.slice(0, 2)
+                        .join("")
+                        .toUpperCase() || ""}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
@@ -93,22 +140,38 @@ export default function Navbar() {
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none">
-                      {user.name}
+                      {user.data?.name}
                     </p>
                     <p className="text-xs leading-none text-muted-foreground">
-                      Role: {user.role}
+                      email: {user.data?.email}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      Role: {user.data?.role}
                     </p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/dashboard">Dashboard</Link>
+                  {user.data?.role === "CUSTOMER" ? (
+                    <Link href="/dashboard/customer">Dashboard</Link>
+                  ) : user.data?.role === "TECHNICIAN" ? (
+                    <Link href="/dashboard/technician">Dashboard</Link>
+                  ) : user.data?.role === "ADMIN" ? (
+                    <Link href="/dashboard/admin">Dashboard</Link>
+                  ) : (
+                    ""
+                  )}
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/profile">Profile Settings</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-red-600 cursor-pointer">
+                <DropdownMenuItem
+                  className="text-red-600 cursor-pointer"
+                  onClick={async () => {
+                    await handelLogOut("logout");
+                  }}
+                >
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>

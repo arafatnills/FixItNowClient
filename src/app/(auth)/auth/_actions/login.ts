@@ -1,4 +1,7 @@
 "use server";
+
+import { cookies } from "next/headers";
+
 type LoginState = {
   success: boolean;
   status: number;
@@ -29,6 +32,19 @@ export const loginAction = async (
   });
 
   const result = await res.json();
-  console.log(result);
+  if (result.success) {
+    const cookeStore = await cookies();
+    cookeStore.set("accessToken", result.data.accessToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24,
+    });
+    cookeStore.set("refreshToken", result.data.refreshToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+  }
+
   return result;
 };
