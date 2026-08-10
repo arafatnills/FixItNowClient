@@ -11,11 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { ModeToggle } from "./MobileToggle";
 import { logout } from "@/services/logout";
 
@@ -47,22 +43,27 @@ type NavbarProps = {
   user: IUser;
 };
 
+const navLinks = [
+  { name: "All Services", href: "/services" },
+  { name: "About Us", href: "/about" },
+  { name: "Contact Us", href: "/contact" },
+];
+
 export default function Navbar({ user }: NavbarProps) {
-  const [isLogout, setIsLogOut] = useState(false)
-  const router = useRouter()
+  const getDashboardHref = () => {
+    const role = user?.data?.role;
+    if (role === "CUSTOMER") return "/dashboard/customer";
+    if (role === "TECHNICIAN") return "/dashboard/technician";
+    if (role === "ADMIN") return "/dashboard/admin";
+    return "/dashboard";
+  };
+
   const handelLogOut = async (action: string) => {
     if (action === "logout") {
       await logout();
-      setIsLogOut(true)
+      toast.success("logout successfully");
     }
   };
-
-  useEffect(() => {
-    if (isLogout) {
-      toast.success("logout successfully");
-      router.push('/auth/login')
-    }
-  }, [isLogout, router]);
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b bg-background/5 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -76,26 +77,28 @@ export default function Navbar({ user }: NavbarProps) {
 
         {/* Middle: Main Navigation (Hidden on small screens) */}
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-          <Link
-            href="/services"
-            className="hover:text-foreground transition-colors"
-          >
-            All Services
-          </Link>
-          <Link
-            href="/categories"
-            className="hover:text-foreground transition-colors"
-          >
-            Categories
-          </Link>
-          {user && (
-            <Link
-              href="/dashboard/customer"
-              className="hover:text-foreground transition-colors"
-            >
-              Dashboard
-            </Link>
-          )}
+          {navLinks
+            .filter((link) => {
+              if (link.name.toLowerCase() === "dashboard") {
+                return user.success === true;
+              }
+              return true;
+            })
+            .map((link, i) => {
+              const href =
+                link.name.toLowerCase() === "dashboard"
+                  ? getDashboardHref()
+                  : link.href;
+              return (
+                <Link
+                  href={href}
+                  key={i}
+                  className="hover:text-foreground transition-colors"
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
         </div>
 
         {/* theme toggle  */}

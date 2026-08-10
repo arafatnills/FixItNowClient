@@ -1,6 +1,9 @@
+import LoginForm from "../_components/LoginFrom";
 
 const RegisterPage = () => {
-  return <div>RegisterPage</div>;
+  return <>
+  <LoginForm/>
+  </>;
 };
 
 export default RegisterPage;

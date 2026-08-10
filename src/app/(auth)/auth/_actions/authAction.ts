@@ -1,6 +1,8 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 type LoginState = {
   success: boolean;
@@ -11,6 +13,7 @@ type LoginState = {
     refreshToken: string;
   };
 };
+
 export const loginAction = async (
   prevState: LoginState,
   fromData: FormData,
@@ -44,6 +47,15 @@ export const loginAction = async (
       sameSite: "lax",
       maxAge: 60 * 60 * 24 * 7,
     });
+
+    const decodedToken = jwt.decode(result.data.accessToken) as JwtPayload;
+    if (decodedToken.role === "CUSTOMER") {
+      redirect("/dashboard/customer");
+    } else if (decodedToken.role === "TECHNICIAN") {
+      redirect("/dashboard/technician");
+    } else if (decodedToken.role === "ADMIN") {
+      redirect("/dashboard/admin");
+    }
   }
 
   return result;
