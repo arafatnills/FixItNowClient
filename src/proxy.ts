@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { cookies } from "next/headers";
+import { NextRequest } from "next/server";
 import { getNewAccessToken } from "./services/refreshToken";
+import { verifyToken } from "./utils/jwt";
 
 const AUTH_ROUTES = ["/auth/login", "/auth/register"];
 const PUBLIC_ROUTES = [
@@ -14,115 +13,89 @@ const PUBLIC_ROUTES = [
   "/auth/register",
 ];
 
-// const DASHBOARD_BY_ROLE: Record<string, string> = {
-//   CUSTOMER: "/dashboard/customer",
-//   TECHNICIAN: "/dashboard/technician",
-//   ADMIN: "/dashboard/admin",
-// };
+const DASHBOARD_BY_ROLE: Record<string, string> = {
+  CUSTOMER: "/dashboard/customer",
+  TECHNICIAN: "/dashboard/technician",
+  ADMIN: "/dashboard/admin",
+};
 
 // This function can be marked `async` if using `await` inside
 export async function proxy(request: NextRequest) {
   const pathName = request.nextUrl.pathname;
-
   let accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
 
-  let decodedAccessToken: JwtPayload | null = null;
-  let decodedRefreshToken: JwtPayload | null = null;
-
-  try {
-    decodedRefreshToken = refreshToken
-      ? (jwt.verify(
-          refreshToken as string,
-          process.env.JWT_REFRESH_SECRET!,
-        ) as JwtPayload)
-      : null;
-  } catch {
-    decodedRefreshToken = null;
-  }
-
-  if (!decodedAccessToken && decodedRefreshToken) {
-    const response = await getNewAccessToken();
-
-    if (response.success) {
-      const newAccessToken = response.data.accessToken;
-      response.cookies.set("accessToken", newAccessToken, {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-        maxAge: 60 * 60 * 24,
-      });
-
-      accessToken = newAccessToken;
-    }
-  }
-
-  try {
-    decodedAccessToken = accessToken
-      ? (jwt.verify(accessToken, process.env.JWT_ACCESS_SECRET!) as JwtPayload)
-      : null;
-  } catch {
-    decodedAccessToken = null;
-  }
-
-  if (!decodedAccessToken && decodedRefreshToken) {
-    cookieStore.delete("accessToken");
-    return NextResponse.redirect(new URL("/auth/login", request.url));
-  }
-
-  let role = null;
-  if (decodedAccessToken) {
-    role = decodedAccessToken.role;
-  }
-
-  if (role && AUTH_ROUTES.includes(pathName)) {
-    if (role === "CUSTOMER") {
-      return NextResponse.redirect(new URL("/dashboard/customer", request.url));
-    } else if (role === "TECHNICIAN") {
-      return NextResponse.redirect(
-        new URL("/dashboard/technician", request.url),
-      );
-    } else if (role === "ADMIN") {
-      return NextResponse.redirect(new URL("/dashboard/admin", request.url));
-    } else {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
-  }
-
-  // for (const [r, path] of Object.entries(DASHBOARD_BY_ROLE)) {
-  //   if (pathName.startsWith(path) && role !== r) {
-  //     return NextResponse.redirect(
-  //       new URL(DASHBOARD_BY_ROLE[role] ?? "/", request.url),
-  //     );
-  //   }
-  // }
-
-  const isPublic = PUBLIC_ROUTES.some(
-    (r) => pathName === r || pathName.startsWith(r + "/"),
+  //! decoded access & refresh token
+  let decodedAccessToken = verifyToken(
+    accessToken,
+    process.env.JWT_ACCESS_SECRET!,
+  );
+  const decodedRefreshToken = verifyToken(
+    refreshToken,
+    process.env.JWT_REFRESH_SECRET!,
   );
 
-  //! Authorized page protection
+  let newAccessToken: string | null = null;
+  let role: string | null = decodedAccessToken?.role ?? null;
+
+  //! if accessToken expire then generate new accessToken using refreshToken and set to cookie
+  if (!decodedAccessToken && decodedRefreshToken && refreshToken) {
+    const response = await getNewAccessToken();
+
+    if (response.success && response.data.accessToken) {
+      newAccessToken = response.data.accessToken as string;
+      decodedAccessToken = verifyToken(
+        newAccessToken,
+        process.env.JWT_ACCESS_SECRET!,
+      );
+      role = decodedAccessToken?.role ?? null;
+      request.cookies.set("accessToken", newAccessToken);
+    }
+  }
+
+  //! check is protected routes or not
+  const isPublic = PUBLIC_ROUTES.some(
+    (r) => pathName === r || (r !== "/" && pathName.startsWith(`${r}/`)),
+  );
+  if (!decodedAccessToken && !isPublic) {
+    const redirect = NextResponse.redirect(new URL("/auth/login", request.url));
+    redirect.cookies.delete("accessToken");
+    return redirect;
+  }
+
   if (!role && !isPublic) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
-  //! authorization: role base access control (RBAC)
-  if (pathName.startsWith("/dashboard/customer") && role !== "CUSTOMER") {
-    return NextResponse.redirect(new URL("/not-found", request.url));
-  }
-  if (pathName.startsWith("/dashboard/technician") && role !== "TECHNICIAN") {
-    return NextResponse.redirect(new URL("/not-found", request.url));
-  }
-  if (pathName.startsWith("/dashboard/admin") && role !== "ADMIN") {
-    return NextResponse.redirect(new URL("/not-found", request.url));
+  //! set token in cookie
+  const response = NextResponse.next({ request });
+  if (newAccessToken) {
+    response.cookies.set("accessToken", newAccessToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24,
+    });
+    accessToken = newAccessToken;
   }
 
-  return NextResponse.next();
+  if (role) {
+    for (const [r, path] of Object.entries(DASHBOARD_BY_ROLE)) {
+      if (pathName.startsWith(path) && role !== r) {
+        return NextResponse.redirect(
+          new URL(DASHBOARD_BY_ROLE[role] ?? "/", request.url),
+        );
+      }
+    }
+  }
+
+  if (decodedAccessToken && AUTH_ROUTES.includes(pathName)) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  return response;
 }
-
-// Alternatively, you can use a default export:
-// export default function proxy(request: NextRequest) { ... }
 
 export const config = {
   matcher: "/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)",
