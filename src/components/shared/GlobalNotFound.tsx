@@ -107,7 +107,7 @@ export default function NotFound() {
                     size={"lg"}
                     className="cursor-pointer py-5 rounded-sm"
                   >
-                    <Link href={"/"} className="flex items-center gap-2">
+                    <Link href={"/services"} className="flex items-center gap-2">
                       <Search className="h-4 w-4" />
                       Browse services
                     </Link>
