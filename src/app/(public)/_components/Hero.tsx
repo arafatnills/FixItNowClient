@@ -1,3 +1,4 @@
+import TrustIndicators from "./FeatureBadge";
 import { HeroSearch } from "./HeroSearch";
 
 const Hero = () => {
@@ -21,7 +22,9 @@ const Hero = () => {
         {/* Call to Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
           <HeroSearch />
+         
         </div>
+         <TrustIndicators/>
       </div>
     </section>
   );

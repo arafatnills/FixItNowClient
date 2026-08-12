@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import GlowTheme from "@/components/shared/GlobalTheme";
 import { ThemeProvider } from "next-themes";
+import Footer from "@/components/shared/Footer";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <Toaster position="top-center" richColors />
 
           {children}
+          <Footer/>
         </ThemeProvider>
       </body>
     </html>
