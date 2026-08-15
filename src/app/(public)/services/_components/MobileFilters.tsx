@@ -1,9 +1,17 @@
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { getCategories } from "../_actions/getAllCategories";
 
-export default function MobileFilters() {
-  const categories = ["All", "Plumbing", "Electrical", "Cleaning", "Repair"];
+export type Category = {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export default async function MobileFilters() {
+  const categories = await getCategories();
 
   return (
     <div className="block lg:hidden w-full mb-8 space-y-4">
@@ -24,13 +32,13 @@ export default function MobileFilters() {
 
       {/* Horizontal Scrollable Category Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
-        {categories.map((cat, idx) => (
+        {categories.map((cat: Category) => (
           <Button
-            key={cat}
-            variant={idx === 0 ? "default" : "outline"}
-            className={`rounded-full h-8 text-sm ${idx === 0 ? "bg-teal-700 hover:bg-teal-800 text-white" : "bg-white dark:bg-slate-900"}`}
+            key={cat.id}
+            variant="outline"
+            className="rounded-full h-8 text-sm bg-white dark:bg-slate-900"
           >
-            {cat}
+            {cat.name}
           </Button>
         ))}
       </div>

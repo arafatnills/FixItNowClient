@@ -1,5 +1,4 @@
 import TrustIndicators from "./FeatureBadge";
-import { HeroSearch } from "./HeroSearch";
 
 const Hero = () => {
   return (
@@ -20,11 +19,10 @@ const Hero = () => {
         </p>
 
         {/* Call to Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
+        {/* <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
           <HeroSearch />
-         
-        </div>
-         <TrustIndicators/>
+        </div> */}
+        <TrustIndicators />
       </div>
     </section>
   );

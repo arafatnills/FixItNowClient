@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 
 export default function ServiceHeader() {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-10">
+    <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-6">
       <div className="w-full md:w-1/2 space-y-6">
         <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white">
           Our Services
@@ -25,7 +25,7 @@ export default function ServiceHeader() {
       </div>
 
       {/* Optimized Next Image */}
-      <div className="w-full md:w-1/2 h-56 md:h-72 rounded-2xl overflow-hidden relative">
+      <div className="w-full hidden md:block md:w-1/2 h-56 md:h-72 rounded-2xl overflow-hidden relative">
         <Image
           src="https://images.unsplash.com/photo-1505798577917-a65157d3320a?q=80&w=800&auto=format&fit=crop"
           alt="Home Services"

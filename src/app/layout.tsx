@@ -27,6 +27,8 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
+
+
   return (
     <html
       lang="en"
@@ -40,7 +42,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         inter.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -51,6 +53,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <Toaster position="top-center" richColors />
 
           {children}
+
+          
           <Footer/>
         </ThemeProvider>
       </body>

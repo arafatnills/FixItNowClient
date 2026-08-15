@@ -10,9 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { logout } from "@/services/logout";
+import BorderAvatar from "../shadcn-space/radix/avatar/avatar-04";
 
 type IUser = {
   success: boolean;
@@ -26,6 +26,7 @@ type IUser = {
     status: string;
     createdAt: string;
     updatedAt: string;
+    profilePhoto: string;
     profile: {
       id: string;
       userId: string;
@@ -70,16 +71,10 @@ export default function NavbarAuthSection({ user }: NavbarAuthSectionProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src="/placeholder-avatar.jpg" alt={user.data?.name} />
-            <AvatarFallback className="bg-teal-100 text-teal-800">
-              {user.data?.name
-                ?.match(/\b\w/g)
-                ?.slice(0, 2)
-                .join("")
-                .toUpperCase() || ""}
-            </AvatarFallback>
-          </Avatar>
+          <BorderAvatar
+            image={user.data?.profilePhoto}
+            name={user.data?.name}
+          />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
