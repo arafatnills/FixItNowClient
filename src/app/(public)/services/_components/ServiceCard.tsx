@@ -3,8 +3,9 @@ import Link from "next/link";
 import { MapPin, ArrowRight } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ServiceType } from "../_actions/serviceAction";
+
 import SuccessBadgeDemo from "@/components/shadcn-space/radix/badge/badge-07";
+import { ServiceType } from "../_actions/serviceAction";
 
 export default function ServiceCard({ service }: { service: ServiceType }) {
   const imageUrl = service.thumbnail?.trim();

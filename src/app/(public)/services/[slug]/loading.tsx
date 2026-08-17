@@ -55,7 +55,7 @@ export default function ServiceDetailsLoading() {
               <Skeleton className="h-6 w-36" />
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {[1, 2, 3, 4].map((i) => (
-                  <Skeleton key={i} className="h-[76px] w-full rounded-xl" />
+                  <Skeleton key={i} className="h-19 w-full rounded-xl" />
                 ))}
               </div>
             </div>

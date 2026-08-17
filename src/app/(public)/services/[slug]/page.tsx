@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { getSingleService } from "../_actions/getSingleService";
-import { servicesData, ServiceType } from "../_actions/serviceAction";
-
 import BreadcrumbNav from "./_components/BreadcrumbNav";
 import ServiceHero from "./_components/ServiceHero";
 import ServiceHeader from "./_components/ServiceHeader";
@@ -24,11 +22,6 @@ const formatDate = (value: string) =>
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-export async function generateStaticParams() {
-  const services = (await servicesData()).result;
-  const list: ServiceType[] = Array.isArray(services) ? services : [];
-  return list.map((service) => ({ slug: service.id }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;

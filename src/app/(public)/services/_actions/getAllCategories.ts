@@ -1,5 +1,6 @@
+'use server'
+
 export const getCategories = async () => {
-  "use cache";
   const res = await fetch(
     `${process.env.BACKEND_API_URL}/api/categories`,
     {

@@ -1,11 +1,39 @@
+"use client";
 import { Star } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
-import { getCategories } from "../_actions/getAllCategories";
 import { Category } from "./MobileFilters";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export default async function SidebarFilters() {
-  const categories = await getCategories();
+export default function SidebarFilters({
+  cate,
+  query,
+}: {
+  cate: Category[];
+  query: { [key: string]: string | string[] | undefined };
+}) {
+  const categories = Array.isArray(cate) ? cate : [cate];
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const selected = searchParams.getAll("category");
+
+  const toggleCategory = (catId: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const current = params.getAll("category");
+
+    params.delete("category");
+
+    const isChecked = current.includes(catId);
+    const next = isChecked
+      ? current.filter((c) => c !== catId)
+      : [...current, catId];
+
+    next.forEach((c) => params.append("category", c));
+    params.set("page", "1");
+    router.push(`${pathname}?${params.toString()}`);
+  };
 
   return (
     <div className="hidden lg:block w-64 shrink-0 space-y-8 pr-6">
@@ -15,20 +43,26 @@ export default async function SidebarFilters() {
           Categories
         </h3>
         <div className="space-y-4">
-          {categories.map((cat: Category) => (
-            <div key={cat.id} className="flex items-center space-x-3">
-              <Checkbox
-                id={`cat-${cat.id}`}
-                className="data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600"
-              />
-              <label
-                htmlFor={`cat-${cat.id}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-600 dark:text-slate-400 hover:text-teal-600 transition-colors"
-              >
-                {cat.name}
-              </label>
-            </div>
-          ))}
+          {categories.map((cat: Category) => {
+            const isChecked = selected.includes(cat.name);
+            return (
+              <div key={cat.id} className="flex items-center space-x-3">
+                <Checkbox
+                  checked={isChecked}
+                  onCheckedChange={() => toggleCategory(cat.name)}
+                  id={`cat-${cat.id}`}
+                  className="data-[state=checked]:bg-teal-600 data-[state=checked]:border-teal-600"
+                />
+                <label
+                  htmlFor={`cat-${cat.id}`}
+                  onClick={() => toggleCategory(cat.name)}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer text-slate-600 dark:text-slate-400 hover:text-teal-600 transition-colors"
+                >
+                  {cat.name}
+                </label>
+              </div>
+            );
+          })}
         </div>
       </div>
 

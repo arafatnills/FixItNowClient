@@ -1,13 +1,15 @@
 import MobileDock from "@/components/shared/MobileDock";
 import Navbar from "@/components/shared/Navbar";
-import React from "react";
+import React, { Suspense } from "react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
       {children}
-      <MobileDock/>
+     <Suspense fallback={null}>
+        <MobileDock />
+      </Suspense>
     </>
   );
 };

@@ -30,7 +30,7 @@ type IUser = {
     profile: {
       id: string;
       userId: string;
-      yearsOfExperience: number | null;
+      experience: number | null;
       bio: string | null;
       certificates: string[];
       createdAt: string;

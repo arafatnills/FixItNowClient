@@ -11,6 +11,7 @@ const PUBLIC_ROUTES = [
   "/contact",
   "/auth/login",
   "/auth/register",
+  "/test"
 ];
 
 const DASHBOARD_BY_ROLE: Record<string, string> = {

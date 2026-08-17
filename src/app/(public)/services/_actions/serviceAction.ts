@@ -1,37 +1,79 @@
+"use server";
 export interface ServiceType {
   id: string;
   serviceName: string;
   description: string;
   thumbnail: string;
-  categoriesId: string;
-  technicianId: string;
-  price: string;
+  price: number;
   city: string;
   area: string;
-  createdAt: string;
-  updatedAt: string;
   category: {
     name: string;
-    id: string;
   };
   technician: {
-    id: string;
-    userId: string;
+    user: {
+      name: string;
+    };
   };
 }
 
-export const servicesData = async () => {
-  const res = await fetch(`${process.env.BACKEND_API_URL}/api/services`, {
-    cache: "force-cache",
-    next: {
-      revalidate: 60 * 60 * 12,
-      tags: ["services"],
+export const servicesData = async ({
+  query,
+}: {
+  query?: { [key: string]: string | string[] | undefined };
+}) => {
+  const params = new URLSearchParams();
+  if (query?.q) {
+    params.set("q", query.q as string);
+  }
+
+  if (query?.city) {
+    params.set("city", query.city as string);
+  }
+
+  if (query?.area) {
+    params.set("area", query.area as string);
+  }
+
+  if (query?.category) {
+    params.set("category", query.category as string);
+  }
+
+  if (query?.category) {
+    if (Array.isArray(query.category)) {
+      query.category.forEach((cat) => params.append("category", cat));
+    } else {
+      params.append("category", query.category as string);
+    }
+  }
+
+  if (query?.page) {
+    params.set("page", query.page as string);
+  }
+
+  if (query?.limit) {
+    params.set("limit", query.limit as string);
+  }
+  if (query?.sort) {
+    params.set("sort", query.sort as string);
+  }
+
+  console.log(params.toString(), "form server");
+
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/services?${params.toString()}`,
+    {
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60 * 12,
+        tags: ["services"],
+      },
     },
-  });
+  );
   const result = await res.json();
 
   return {
-    result: result.data.allServices,
+    services: result.data.allServices,
     meta: result.data.meta,
   };
 };
