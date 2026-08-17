@@ -7,9 +7,9 @@ const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       <Navbar />
       {children}
-     <Suspense fallback={null}>
+     {/* <Suspense fallback={null}>
         <MobileDock />
-      </Suspense>
+      </Suspense> */}
     </>
   );
 };
