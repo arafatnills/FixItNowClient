@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import { SearchIcon } from "lucide-react";
 import { Field } from "@/components/ui/field";
@@ -8,11 +8,20 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export function HeroSearch() {
+  const router = useRouter();
+  const [query, setQuery] = useState("");
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-  
+    const trimmed = query.trim();
+    const params = new URLSearchParams();
+    if (trimmed) params.set("q", trimmed);
+    router.push(`/services?${params.toString()}`);
+
+    setQuery('')
   };
 
   return (
@@ -31,6 +40,8 @@ export function HeroSearch() {
 
           <InputGroupInput
             id="hero-search-input"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             className="flex-1 text-base md:text-lg border-none focus-visible:ring-0 px-3 h-full bg-transparent outline-none placeholder:text-muted-foreground"
             placeholder="What service do you need?..."
           />
