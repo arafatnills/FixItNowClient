@@ -1,17 +1,14 @@
-import MobileDock from "@/components/shared/MobileDock";
-import Navbar from "@/components/shared/Navbar";
-import React, { Suspense } from "react";
+import { AppSidebar } from "@/components/dashboard/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <Navbar />
-      {children}
-     <Suspense fallback={null}>
-        <MobileDock />
-      </Suspense>
-    </>
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   );
-};
-
-export default DashboardLayout;
+}

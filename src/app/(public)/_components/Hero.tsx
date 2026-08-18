@@ -8,13 +8,13 @@ const Hero = () => {
     <section className="relative w-full overflow-hidden py-10 md:py-22 lg:py-32 flex items-center justify-center min-h-[calc(100vh-4rem)]">
       <div className="container px-4 md:px-6 flex flex-col items-center text-center max-w-4xl mx-auto space-y-8 z-10">
         {/* Responsive Heading */}
-        <h1 className="text-3xl leading-20 font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          Expert Home Services, <br className="hidden sm:block" />
-          <span className="text-teal-600 dark:text-teal-500">
+        <h1 className="text-3xl mb-2 font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          Expert Home Services,  <br className="hidden md:block" />
+        </h1>
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl dark:text-teal-500">
             <HeroType/>
             {/* Just a Click Away */}
-          </span>
-        </h1>
+          </h1>
 
         {/* Responsive Paragraph */}
         <p className="  animate-in fade-in slide-in-from-bottom-4 duration-800max-w-2xl leading-normal text-muted-foreground text-base sm:text-lg md:text-xl sm:leading-8">

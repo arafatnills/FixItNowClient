@@ -1,3 +1,4 @@
+import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -39,6 +40,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="w-full max-w-md">{children}</div>
           </div>
         </div>
+        
       </div>
     </div>
   );
