@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/sonner";
 import GlowTheme from "@/components/shared/GlobalTheme";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/shared/Footer";
+import ThemeColorSync from "@/components/shared/ThemeColorSync";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -49,6 +50,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           enableSystem
           disableTransitionOnChange
         >
+          <ThemeColorSync/>
           <GlowTheme />
           <Toaster position="top-center" richColors />
 
