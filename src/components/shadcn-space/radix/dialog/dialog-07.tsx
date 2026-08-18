@@ -220,8 +220,6 @@ export default function Dialog07({ children }: { children: React.ReactNode }) {
   const handleBooking = () => {
     if (!date) return;
 
-    console.log("Booking confirmed for date:", format(date, "PPP"));
-    alert(`Booking Confirmed for: ${format(date, "PPP")}`);
   };
   return (
     <Dialog>

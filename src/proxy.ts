@@ -26,6 +26,7 @@ export async function proxy(request: NextRequest) {
   let accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
 
+
   //! decoded access & refresh token
   let decodedAccessToken = verifyToken(
     accessToken,
@@ -99,5 +100,6 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: "/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)",
+  matcher: ["/((?!api|_next/static|favicon.ico|_next/image|.*\\.png$).*)", '/services'],
+  
 };

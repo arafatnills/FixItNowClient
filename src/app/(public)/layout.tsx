@@ -5,11 +5,13 @@ import React, { Suspense } from "react";
 const PublicLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <Navbar />
+     <div className="overflow-x-hidden">
+       <Navbar />
       {children}
      <Suspense fallback={null}>
         <MobileDock />
       </Suspense>
+     </div>
     </>
   );
 };

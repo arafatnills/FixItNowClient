@@ -1,24 +1,41 @@
 "use client";
-import { Star } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Category } from "./MobileFilters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState, useTransition } from "react";
 
-export default function SidebarFilters({
-  cate,
-  query,
-}: {
-  cate: Category[];
-  query: { [key: string]: string | string[] | undefined };
-}) {
+const MIN_PRICE = 0;
+const MAX_PRICE = 5000;
+
+export default function SidebarFilters({ cate }: { cate: Category[] }) {
   const categories = Array.isArray(cate) ? cate : [cate];
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
+  const initialMin = Number(searchParams.get("minPrice")) || MIN_PRICE;
+  const initialMax = Number(searchParams.get("maxPrice")) || MAX_PRICE;
+
+  const [range, setRange] = useState<[number, number]>([
+    initialMin,
+    initialMax,
+  ]);
+
+  const applyToUrl = (values: [number, number]) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("minPrice", String(values[0]));
+    params.set("maxPrice", String(values[1]));
+    params.set("page", "1");
+
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`);
+    });
+  };
+
+  // Get selected categories from search params
   const selected = searchParams.getAll("category");
-
   const toggleCategory = (catId: string) => {
     const params = new URLSearchParams(searchParams.toString());
     const current = params.getAll("category");
@@ -32,11 +49,15 @@ export default function SidebarFilters({
 
     next.forEach((c) => params.append("category", c));
     params.set("page", "1");
-    router.push(`${pathname}?${params.toString()}`);
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`);
+    });
   };
 
   return (
-    <div className="hidden lg:block w-64 shrink-0 space-y-8 pr-6">
+    <div
+      className={`hidden lg:block w-64 shrink-0 space-y-8 pr-6 ${isPending ? "opacity-60 pointer-events-none" : ""}`}
+    >
       {/* Categories */}
       <div>
         <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
@@ -71,15 +92,24 @@ export default function SidebarFilters({
         <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
           Price Range
         </h3>
-        <Slider defaultValue={[0]} max={5000} step={100} className="w-full" />
+        <Slider
+          value={range}
+          min={MIN_PRICE}
+          max={MAX_PRICE}
+          key={`${initialMin}-${initialMax}`}
+          step={100}
+          onValueChange={(e) => setRange(e as [number, number])}
+          onValueCommit={(e) => applyToUrl(e as [number, number])}
+          className={`w-full ${isPending ? "opacity-60" : ""}`}
+        />
         <div className="flex justify-between mt-3 text-xs text-slate-500 font-medium">
-          <span>৳0</span>
-          <span>৳5000+</span>
+          <span>৳{range[0]}</span>
+          <span>৳{range[1] === MAX_PRICE ? `${MAX_PRICE}` : range[1]}</span>
         </div>
       </div>
 
       {/* Ratings */}
-      <div>
+      {/* <div>
         <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
           Ratings
         </h3>
@@ -100,7 +130,7 @@ export default function SidebarFilters({
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

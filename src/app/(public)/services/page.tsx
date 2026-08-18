@@ -14,7 +14,8 @@ export default async function ServicesPage({ searchParams }: PageProps) {
   const query = await searchParams;
   const { services } = await servicesData({ query });
   const categories = await getCategories();
-  console.log(categories, "cl");
+
+  
   return (
     <div className="min-h-screen pt-10 pb-20">
       <div className="container mx-auto px-8 ">
@@ -22,7 +23,7 @@ export default async function ServicesPage({ searchParams }: PageProps) {
         <MobileFilters />
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <SidebarFilters cate={categories} query={query} />
+          <SidebarFilters cate={categories} />
 
           <div className="flex-1 w-full">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">

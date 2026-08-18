@@ -12,8 +12,7 @@ import { Button } from "@/components/ui/button";
 export function HeroSearch() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add search logic or routing here
-    console.log("Searching for pros...");
+  
   };
 
   return (

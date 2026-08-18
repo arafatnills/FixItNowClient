@@ -22,6 +22,7 @@ export const servicesData = async ({
 }: {
   query?: { [key: string]: string | string[] | undefined };
 }) => {
+  console.log(query)
   const params = new URLSearchParams();
   if (query?.q) {
     params.set("q", query.q as string);
@@ -46,6 +47,12 @@ export const servicesData = async ({
       params.append("category", query.category as string);
     }
   }
+  if(query?.minPrice){
+    params.set('minPrice', query.minPrice as string)
+  }
+  if(query?.maxPrice){
+    params.set('maxPrice', query.maxPrice as string)
+  }
 
   if (query?.page) {
     params.set("page", query.page as string);
@@ -58,7 +65,7 @@ export const servicesData = async ({
     params.set("sort", query.sort as string);
   }
 
-  console.log(params.toString(), "form server");
+
 
   const res = await fetch(
     `${process.env.BACKEND_API_URL}/api/services?${params.toString()}`,
