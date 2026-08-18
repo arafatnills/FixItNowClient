@@ -1,5 +1,6 @@
+import AccordionList from "@/components/shadcn-space/radix/accordion/accordion-05";
 import { FAQHeader } from "./FAQHeader";
-import { FAQList } from "./FAQList";
+
 
 export default function FAQSection() {
   const faqData = [
@@ -30,7 +31,7 @@ export default function FAQSection() {
       <div className="container mx-auto px-4 max-w-3xl">
         <FAQHeader />
 
-        <FAQList faqs={faqData} />
+        <AccordionList  faqData={faqData}/>
       </div>
     </section>
   );
