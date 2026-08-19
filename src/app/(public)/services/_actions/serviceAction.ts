@@ -22,7 +22,7 @@ export const servicesData = async ({
 }: {
   query?: { [key: string]: string | string[] | undefined };
 }) => {
-  console.log(query)
+  
   const params = new URLSearchParams();
   if (query?.q) {
     params.set("q", query.q as string);

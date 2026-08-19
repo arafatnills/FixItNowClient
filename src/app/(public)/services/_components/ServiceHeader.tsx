@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function ServiceHeader() {
   const searchTrams = useSearchParams();
@@ -55,6 +56,8 @@ export default function ServiceHeader() {
           />
         </div>
       </div>
+
+
 
       {/* Optimized Next Image */}
       {/* <div className="w-full hidden md:block md:w-1/2 h-56 md:h-72 rounded-2xl overflow-hidden relative">

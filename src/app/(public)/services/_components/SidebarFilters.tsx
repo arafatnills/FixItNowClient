@@ -4,7 +4,8 @@ import { Slider } from "@/components/ui/slider";
 import { Category } from "./MobileFilters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
-import { Star } from "lucide-react";
+import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const MIN_PRICE = 0;
 const MAX_PRICE = 5000;
@@ -55,12 +56,31 @@ export default function SidebarFilters({ cate }: { cate: Category[] }) {
     });
   };
 
+  const activeFilterCount =
+    selected.length +
+    (initialMin !== MIN_PRICE || initialMax !== MAX_PRICE ? 1 : 0) +
+    (searchParams.get("q") ? 1 : 0);
+
+  const clearFilters = () => {
+    router.push(pathname);
+  };
+
   return (
     <div
       className={`w-64 shrink-0 p-6 lg:p-0 space-y-8 pr-6 ${isPending ? "opacity-60 pointer-events-none" : ""}`}
     >
       {/* Categories */}
       <div>
+        {activeFilterCount > 0 && (
+          <Button
+            variant="link"
+            onClick={clearFilters}
+            className="p-0 mb-5 text-white cursor-pointer rounded-0"
+          >
+            <X className="w-4 h-4 mr-1" />
+            Clear Filters ({activeFilterCount})
+          </Button>
+        )}
         <h3 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4">
           Categories
         </h3>

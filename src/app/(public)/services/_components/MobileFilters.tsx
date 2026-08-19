@@ -6,6 +6,7 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -82,6 +83,10 @@ export default function MobileFilters({ cate }: { cate: Category[] }) {
                 </SheetDescription>
               </SheetHeader>
               <SidebarFilters cate={cate} />
+
+              <SheetFooter >
+                logout
+              </SheetFooter>
             </SheetContent>
           </Sheet>
         </div>

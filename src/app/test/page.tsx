@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 
 import ServiceHeader from "../(public)/services/_components/ServiceHeader";
@@ -9,15 +8,11 @@ export const metadata: Metadata = {
   },
 };
 
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+// type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-const ServicesPage = async ({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) => {
-  const search = await searchParams
-  console.log(search)
+const ServicesPage = async () => {
+
+
   return (
     <div>
       <div className="max-w-11/12 mx-auto py-6 mb-20">
