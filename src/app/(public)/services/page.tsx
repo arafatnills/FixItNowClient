@@ -15,12 +15,12 @@ export default async function ServicesPage({ searchParams }: PageProps) {
   const { services } = await servicesData({ query });
   const categories = await getCategories();
 
-  
   return (
     <div className="min-h-screen pt-10 pb-20">
       <div className="container mx-auto px-8 ">
         <ServiceHeader />
-        <MobileFilters />
+        <MobileFilters cate={categories}/>
+       
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           <SidebarFilters cate={categories} />
