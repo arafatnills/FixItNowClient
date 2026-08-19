@@ -2,7 +2,6 @@
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getCategories } from "../_actions/getAllCategories";
 import {
   Sheet,
   SheetContent,
@@ -15,6 +14,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
 import SidebarFilters from "./SidebarFilters";
 
+
 export type Category = {
   id: string;
   name: string;
@@ -22,31 +22,7 @@ export type Category = {
   updatedAt: string;
 };
 
-export function SheetNoCloseButton({ cate }: { cate: Category[] }) {
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="rounded-full shrink-0">
-          <SlidersHorizontal className="w-4 h-4 text-slate-600 dark:text-slate-300" />
-        </Button>
-      </SheetTrigger>
-      <SheetContent showCloseButton={false} side="left">
-        <SheetHeader>
-          <SheetTitle>No Close Button</SheetTitle>
-          <SheetDescription>
-            This sheet doesn&apos;t have a close button in the top-right corner.
-            Click outside to close.
-          </SheetDescription>
-        </SheetHeader>
-
-        <SidebarFilters cate={cate}/>
-      </SheetContent>
-    </Sheet>
-  );
-}
-
 export default function MobileFilters({ cate }: { cate: Category[] }) {
-  const categories = Array.isArray(cate) ? cate : [cate];
   const searchTrams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
@@ -87,20 +63,28 @@ export default function MobileFilters({ cate }: { cate: Category[] }) {
           />
         </div>
 
-        <SheetNoCloseButton cate={cate}/>
-      </div>
-
-      {/* Horizontal Scrollable Category Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
-        {categories.map((cat: Category) => (
-          <Button
-            key={cat.id}
-            variant="outline"
-            className="rounded-full h-8 text-sm bg-white dark:bg-slate-900"
-          >
-            {cat?.name}
-          </Button>
-        ))}
+        <div className="">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full shrink-0"
+              >
+                <SlidersHorizontal className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left">
+              <SheetHeader>
+                <SheetTitle>Filters</SheetTitle>
+                <SheetDescription>
+                  Filter services by category, price, and rating.
+                </SheetDescription>
+              </SheetHeader>
+              <SidebarFilters cate={cate} />
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </div>
   );

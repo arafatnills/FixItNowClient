@@ -40,7 +40,7 @@ export default function ServiceHeader() {
         </p>
 
         {/* Shadcn Input */}
-        <div className="hidden md:flex relative max-w-md items-center">
+        <div className="hidden lg:flex relative max-w-md items-center">
           <Search className="absolute left-3 w-5 h-5 text-slate-400 z-10" />
           <Input
             onChange={(e) => {

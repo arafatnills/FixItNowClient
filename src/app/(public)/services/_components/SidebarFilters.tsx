@@ -4,6 +4,7 @@ import { Slider } from "@/components/ui/slider";
 import { Category } from "./MobileFilters";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
+import { Star } from "lucide-react";
 
 const MIN_PRICE = 0;
 const MAX_PRICE = 5000;
@@ -56,7 +57,7 @@ export default function SidebarFilters({ cate }: { cate: Category[] }) {
 
   return (
     <div
-      className={`hidden lg:block w-64 shrink-0 space-y-8 pr-6 ${isPending ? "opacity-60 pointer-events-none" : ""}`}
+      className={`w-64 shrink-0 p-6 lg:p-0 space-y-8 pr-6 ${isPending ? "opacity-60 pointer-events-none" : ""}`}
     >
       {/* Categories */}
       <div>
