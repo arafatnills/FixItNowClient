@@ -6,7 +6,6 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -66,12 +65,12 @@ export default function MobileFilters({ cate }: { cate: Category[] }) {
         <div className="">
           <Sheet>
             <SheetTrigger asChild>
-              <Button
+              <Button 
                 variant="outline"
                 size="icon"
-                className="rounded-full shrink-0"
+                className="rounded-full shrink-0 "
               >
-                <SlidersHorizontal className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+                <SlidersHorizontal  className="w-8 h-8 text-slate-600 dark:text-slate-300" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left">

@@ -2,28 +2,56 @@ import Link from "next/link";
 import { ShieldCheck, Clock } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Dialog07 from "@/components/shadcn-space/radix/dialog/dialog-07";
 
-export default function DesktopBookingCard({ formattedPrice, serviceId, technicianId }: { formattedPrice: string; serviceId: string; technicianId: string }) {
+import { getMe } from "@/services/getMe";
+
+export default async function DesktopBookingCard({
+  formattedPrice,
+  serviceId,
+  technicianId,
+}: {
+  formattedPrice: string;
+  serviceId: string;
+  technicianId: string;
+}) {
+  const me = await getMe();
+
+  const data = {
+    serviceId,
+    technicianId,
+  };
+
+  const profilePhoto: string = me.data?.profilePhoto;
+
   return (
     <aside className="hidden lg:block">
       <Card className="sticky top-24 gap-0 border-slate-200 p-0 shadow-sm dark:border-slate-800">
         <CardContent className="space-y-5 p-6">
           <div>
-            <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">Starting from</p>
-            <p className="text-3xl font-extrabold text-teal-700 dark:text-teal-400">{formattedPrice}</p>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Final price depends on on-site inspection.</p>
+            <p className="text-xs font-semibold tracking-wider text-slate-400 uppercase">
+              Starting from
+            </p>
+            <p className="text-3xl font-extrabold text-teal-700 dark:text-teal-400">
+              {formattedPrice}
+            </p>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              Final price depends on on-site inspection.
+            </p>
           </div>
           <div className="space-y-2.5">
             {/* <Button asChild className="h-11 w-full rounded-full bg-teal-600 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700">
               <Link href={`/booking/${serviceId}`}>Book Now</Link>
             </Button> */}
-            <Dialog07>
-              <Button className="h-11 w-full rounded-full bg-teal-600 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700 cursor-pointer">
-                Book Now
-              </Button>
-            </Dialog07>
-            <Button asChild variant="outline" className="h-11 w-full rounded-full border-slate-200 dark:border-slate-700">
+
+            <Button className="h-11 w-full rounded-full bg-teal-600 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700 cursor-pointer">
+              Book Now
+            </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              className="h-11 w-full rounded-full border-slate-200 dark:border-slate-700"
+            >
               <Link href={`/technicians/${technicianId}`}>View technician</Link>
             </Button>
           </div>

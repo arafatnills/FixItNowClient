@@ -3,7 +3,6 @@ import { getSingleService } from "../_actions/getSingleService";
 import BreadcrumbNav from "./_components/BreadcrumbNav";
 import ServiceHero from "./_components/ServiceHero";
 import ServiceHeader from "./_components/ServiceHeader";
-import MobilePriceStrip from "./_components/MobilePriceStrip";
 import ServiceAbout from "./_components/ServiceAbout";
 import ServiceSpecs from "./_components/ServiceSpecs";
 import ServiceHowItWorks from "./_components/ServiceHowItWorks";
@@ -49,7 +48,7 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
   }
 
   const imageUrl = service.thumbnail?.trim() || "";
-  const categoryName = service.category?.name || "Home Service";
+  const categoryName = service.category?.name || "";
   const location = [service.area, service.city].filter(Boolean).join(", ");
   const formattedPrice = formatPrice(service.price);
   const formattedDate = formatDate(service.createdAt);
@@ -64,7 +63,6 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
           <div className="min-w-0 space-y-6">
             <ServiceHero imageUrl={imageUrl} serviceName={service.serviceName} categoryName={categoryName} />
             <ServiceHeader serviceName={service.serviceName} location={location} />
-            <MobilePriceStrip formattedPrice={formattedPrice} serviceId={service.id} />
             <ServiceAbout description={service.description} />
             <ServiceSpecs categoryName={categoryName} location={location} formattedDate={formattedDate} />
             <ServiceHowItWorks />
@@ -74,6 +72,7 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
             formattedPrice={formattedPrice} 
             serviceId={service.id} 
             technicianId={service.technicianId} 
+            
           />
         </div>
       </div>

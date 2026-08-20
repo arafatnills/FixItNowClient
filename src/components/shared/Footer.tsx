@@ -7,7 +7,8 @@ import {
   FaLinkedin,
 } from "react-icons/fa6";
 import CurrentYear from "./CurrentYear";
-
+import Image from "next/image";
+import logo from '../../../public/logo.png'
 const socialLinks = [
   { href: "#", icon: <FaFacebook className="w-5 h-5" /> },
   { href: "#", icon: <FaXTwitter className="w-5 h-5" /> },
@@ -62,10 +63,12 @@ export default function Footer() {
           {/* ১. Brand Section */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2">
-              <span className="text-2xl font-bold text-teal-700 dark:text-teal-500">
+              <span className="text-2xl font-bold text-teal-700 gap-2 dark:text-teal-500 flex items-center">
+                <Image src={logo} width={40} height={100} alt="logo" />
                 FixIt<span className="text-amber-500">Now</span>
               </span>
             </Link>
+
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-xs">
               Your trusted platform for finding top-rated professionals for all
               your home service and repair needs. Fast, secure, and reliable.
@@ -149,7 +152,7 @@ export default function Footer() {
         {/* ৫. Bottom Bar */}
         <div className="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-slate-500 dark:text-slate-400 text-center md:text-left">
-            © {<CurrentYear/>} FixItNow. All rights reserved.
+            © {<CurrentYear />} FixItNow. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-slate-500 dark:text-slate-400">
             {bottomLinks.map((link, index) => {

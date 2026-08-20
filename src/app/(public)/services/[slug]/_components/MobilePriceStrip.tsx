@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import Dialog07 from "@/components/shadcn-space/radix/dialog/dialog-07";
 
 export default function MobilePriceStrip({
   formattedPrice,
@@ -20,11 +19,9 @@ export default function MobilePriceStrip({
         </p>
       </div>
 
-      <Dialog07>
-        <Button className="h-11 shrink-0 rounded-full bg-teal-600 px-7 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700">
-          Book Now
-        </Button>
-      </Dialog07>
+      <Button className="h-11 shrink-0 rounded-full bg-teal-600 px-7 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700">
+        Book Now
+      </Button>
     </div>
   );
 }

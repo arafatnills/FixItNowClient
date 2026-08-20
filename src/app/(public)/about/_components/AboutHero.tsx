@@ -3,7 +3,7 @@ import { Sparkles } from "lucide-react";
 
 export default function AboutHero() {
   return (
-    <section className="relative pt-16 pb-20 overflow-hidden bg-gradient-to-b from-teal-50/50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
+    <section className="relative pt-16 pb-20 overflow-hidden bg-linear-to-b from-teal-50/50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
@@ -31,7 +31,7 @@ export default function AboutHero() {
                 alt="FixItNow Technician at work"
                 width={700}
                 height={500}
-                className="w-full h-[380px] lg:h-[460px] object-cover hover:scale-105 transition-transform duration-500"
+                className="w-full h-95 lg:h-115 object-cover hover:scale-105 transition-transform duration-500"
                 priority
               />
             </div>
