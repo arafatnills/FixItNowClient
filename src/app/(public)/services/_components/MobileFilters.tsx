@@ -15,7 +15,6 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
 import SidebarFilters from "./SidebarFilters";
 
-
 export type Category = {
   id: string;
   name: string;
@@ -60,7 +59,7 @@ export default function MobileFilters({ cate }: { cate: Category[] }) {
             }
             type="text"
             placeholder="Search services..."
-            className="w-full pl-9 rounded-full bg-white dark:bg-slate-900 focus-visible:ring-teal-500"
+            className="w-full pl-9 py-6 rounded-md bg-white dark:bg-slate-900 focus-visible:ring-teal-500 focus-visible:ring-1"
           />
         </div>
 
@@ -72,7 +71,7 @@ export default function MobileFilters({ cate }: { cate: Category[] }) {
                 size="icon"
                 className="rounded-full shrink-0"
               >
-                <SlidersHorizontal className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+                <SlidersHorizontal className="w-5 h-5 text-slate-600 dark:text-slate-300" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
@@ -83,10 +82,6 @@ export default function MobileFilters({ cate }: { cate: Category[] }) {
                 </SheetDescription>
               </SheetHeader>
               <SidebarFilters cate={cate} />
-
-              <SheetFooter >
-                logout
-              </SheetFooter>
             </SheetContent>
           </Sheet>
         </div>
