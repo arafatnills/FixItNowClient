@@ -32,7 +32,7 @@ const Header = ({user}: {user: UserType}) => {
           <SidebarTrigger className="[&_svg]:size-5!" />
 
           <Separator orientation="vertical" className="hidden h-4! sm:block" />
-          <Breadcrumb>
+          <Breadcrumb className="hidden lg:flex">
             <BreadcrumbList>
               {segments.map((segment, index) => {
                 const isLast = index === segments.length - 1;

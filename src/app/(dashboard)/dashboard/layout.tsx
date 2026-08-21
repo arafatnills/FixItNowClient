@@ -3,10 +3,15 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import Header from "@/components/dashboard/Header";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { getMe } from "@/services/getMe";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 async function AsyncHeader() {
   const user = await getMe();
   return <Header user={user} />;
+}
+async function AsyncSidebar() {
+  const user = await getMe();
+  return <AppSidebar user={user} />;
 }
 
 export default function DashboardLayout({
@@ -15,16 +20,19 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-
-      <SidebarInset className="min-w-0">
+    <TooltipProvider>
+      <SidebarProvider>
         <Suspense fallback={null}>
-          <AsyncHeader />
+          <AsyncSidebar />
         </Suspense>
+        <SidebarInset className="min-w-0">
+          <Suspense fallback={null}>
+            <AsyncHeader />
+          </Suspense>
 
-        <main className="w-full min-w-0">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
+          <main className="w-full min-w-0">{children}</main>
+        </SidebarInset>
+      </SidebarProvider>
+    </TooltipProvider>
   );
 }
