@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import { getMe } from "@/services/getMe";
+import BookingButton from "./BookingButton";
 
 export default async function DesktopBookingCard({
   formattedPrice,
@@ -14,14 +15,8 @@ export default async function DesktopBookingCard({
   serviceId: string;
   technicianId: string;
 }) {
-  const me = await getMe();
+  const user = await getMe();
 
-  const data = {
-    serviceId,
-    technicianId,
-  };
-
-  const profilePhoto: string = me.data?.profilePhoto;
 
   return (
     <aside className="hidden lg:block">
@@ -43,9 +38,9 @@ export default async function DesktopBookingCard({
               <Link href={`/booking/${serviceId}`}>Book Now</Link>
             </Button> */}
 
-            <Button className="h-11 w-full rounded-full bg-teal-600 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700 cursor-pointer">
-              Book Now
-            </Button>
+        
+
+            <BookingButton serviceId={serviceId} technicianId={technicianId} user={user}/>
 
             <Button
               asChild
