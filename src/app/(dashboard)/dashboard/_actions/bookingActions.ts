@@ -1,6 +1,7 @@
 "use server";
 import { cookies } from "next/headers";
 
+// ge all customer bookings
 export const getCustomerBookings = async () => {
   const cookeStore = await cookies();
   const accessToken = cookeStore.get("accessToken")?.value;
@@ -35,3 +36,33 @@ export const getCustomerBookings = async () => {
   }
 };
 
+// create payment url
+
+export const createPaymentURL = async (bookingId: string) => {
+  const cookeStore = await cookies();
+  const accessToken = cookeStore.get("accessToken")?.value;
+  const payload = {
+    bookingId: bookingId,
+  };
+  if (!accessToken) {
+    return {
+      success: false,
+      message: "user not logged in!",
+    };
+  }
+
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/payments/checkout`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  const result = await res.json();
+  return result;
+};

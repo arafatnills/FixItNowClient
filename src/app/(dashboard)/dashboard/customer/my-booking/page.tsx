@@ -1,4 +1,3 @@
-
 import MyBookingList from "../../_components/MyBookingList";
 import { getCustomerBookings } from "../../_actions/bookingActions";
 

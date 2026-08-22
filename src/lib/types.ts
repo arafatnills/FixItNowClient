@@ -1,12 +1,13 @@
-import { LucideProps } from "lucide-react"
-import { ForwardRefExoticComponent, RefAttributes } from "react"
+import { LucideProps } from "lucide-react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
 
 export type SidebarMenuItems = {
-    label: string
-    href: string
-    icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>,
-  
-}
+  label: string;
+  href: string;
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
+};
 
 export type BookingType = {
   id: string;
@@ -27,5 +28,9 @@ export type BookingType = {
     serviceName: string;
     price?: number;
   };
-  paymentStatus?: "PAID" | "PENDING" | "FAILED";
+
+  payment?: {
+    id: string;
+    status: "PAID" | "PENDING" | "FAILED";
+  } | null;
 };
