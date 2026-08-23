@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 // ge all customer bookings
@@ -27,6 +28,7 @@ export const getCustomerBookings = async () => {
     const result = await res.json();
 
     return result;
+
   } catch (error: unknown) {
     return {
       success: false,
@@ -37,7 +39,6 @@ export const getCustomerBookings = async () => {
 };
 
 // create payment url
-
 export const createPaymentURL = async (bookingId: string) => {
   const cookeStore = await cookies();
   const accessToken = cookeStore.get("accessToken")?.value;
@@ -64,5 +65,48 @@ export const createPaymentURL = async (bookingId: string) => {
   );
 
   const result = await res.json();
+  return result;
+};
+
+// customer dashboard static
+export const getCustomerDashboardData = async () => {
+  const cookeStore = await cookies();
+  const accessToken = cookeStore.get("accessToken")?.value;
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/user/statistic`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    cache: "no-store",
+  });
+
+  const result = await res.json();
+  console.log(result)
+  return result;
+};
+
+// cancel booking
+export const cancelBooking = async (bookingId: string) => {
+  const cookeStore = await cookies();
+  const accessToken = cookeStore.get("accessToken")?.value;
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/bookings/my-bookings/${bookingId}/cancel`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+      },
+      // body: JSON.stringify(bookingId),
+      cache: "no-store",
+    },
+  );
+
+  const result = await res.json();
+
+  if (result.success) {
+    revalidatePath("/dashboard/customer/my-bookings");
+  }
   return result;
 };

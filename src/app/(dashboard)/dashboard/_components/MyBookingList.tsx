@@ -1,6 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import { CreditCard, Star } from "lucide-react";
+import { Star } from "lucide-react";
 
 // Shadcn Components
 import {
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { BookingType } from "@/lib/types";
 import PaymentButton from "./PaymentButton";
 import Link from "next/link";
+import CancelButton from "./CancelButton";
 
 export default function MyBookingsTable({
   bookings,
@@ -43,7 +44,6 @@ export default function MyBookingsTable({
               <TableHead className="font-medium">Status</TableHead>
               <TableHead className="font-medium">Payment</TableHead>
               <TableHead className="font-medium">Booking</TableHead>
-              <TableHead className="font-medium">Action</TableHead>
               <TableHead className="font-medium text-right">Review</TableHead>
             </TableRow>
           </TableHeader>
@@ -56,8 +56,14 @@ export default function MyBookingsTable({
               >
                 {/* 1. Service Name */}
                 <TableCell className="p-4 align-middle font-medium text-slate-900 dark:text-white max-w-75 truncate">
-                  <Button asChild variant={'link'} className="dark:text-white text-black">
-                    <Link  href={`/services/${booking.serviceId}`}>{booking.service.serviceName}</Link>
+                  <Button
+                    asChild
+                    variant={"link"}
+                    className="dark:text-white text-black"
+                  >
+                    <Link href={`/services/${booking.serviceId}`}>
+                      {booking.service.serviceName}
+                    </Link>
                   </Button>
                 </TableCell>
 
@@ -96,22 +102,10 @@ export default function MyBookingsTable({
 
                 {/* 6. Booking Action (Cancel Button) */}
                 <TableCell>
-                  {booking.status !== "CANCELLED" && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      disabled={booking.status === "ACCEPTED"}
-                      className="h-7 px-3 text-xs text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 dark:text-red-400 dark:border-red-900/50 dark:hover:bg-red-950/30 bg-transparent"
-                    >
-                      Cancel
-                    </Button>
-                  )}
+                  <CancelButton booking={booking} />
                 </TableCell>
 
-                {/* 7. Action Status */}
-                <TableCell className="text-slate-500 font-medium">
-                  TBD
-                </TableCell>
+             
 
                 {/* 8. Review Button */}
                 <TableCell className="text-right">
