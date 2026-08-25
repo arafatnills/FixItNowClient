@@ -34,3 +34,41 @@ export type BookingType = {
     status: "PAID" | "PENDING" | "FAILED";
   } | null;
 };
+
+
+
+export enum BookingStatus {
+  PENDING = "PENDING",
+  ACCEPTED = "ACCEPTED",
+  REJECTED = "REJECTED",
+  COMPLETED = "COMPLETED",
+  CANCELLED = "CANCELLED",
+  INPROGRESS = "INPROGRESS",
+}
+
+export type BookingCustomer = {
+  id: string;
+  name: string;
+  email?: string;
+  profilePhoto?: string;
+};
+
+export type BookingService = {
+  id: string;
+  serviceName: string;
+  price?: number;
+};
+
+export type Booking = {
+  id: string;
+  customerId: string;
+  technicianId: string;
+  serviceId: string;
+  scheduledAt: string;
+  status: BookingStatus;
+  createdAt: string;
+  updatedAt: string;
+
+  customer: BookingCustomer;
+  service: BookingService;
+};

@@ -6,6 +6,7 @@ import ServiceList from "./_components/ServiceList";
 import { servicesData } from "./_actions/serviceAction";
 import { getCategories } from "./_actions/getAllCategories";
 import { ServicePagination } from "./_components/Pagination";
+import { GlobalPagination } from "@/components/shared/Pagination";
 
 type PageProps = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -15,7 +16,6 @@ export default async function ServicesPage({ searchParams }: PageProps) {
   const query = await searchParams;
   const { services, meta } = await servicesData({ query });
   const categories = await getCategories();
-
 
   return (
     <div className="min-h-screen pt-10 pb-20">
@@ -34,8 +34,12 @@ export default async function ServicesPage({ searchParams }: PageProps) {
               <ServiceList service={services} />
             </div>
 
-            {/* Shadcn Pagination */}
-            <ServicePagination meta={meta} />
+            {meta && meta.totalPages > 0 && (
+              <GlobalPagination
+                currentPage={meta.page}
+                totalPages={meta.totalPages}
+              />
+            )}
           </div>
         </div>
       </div>

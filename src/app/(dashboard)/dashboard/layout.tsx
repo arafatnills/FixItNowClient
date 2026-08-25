@@ -4,6 +4,7 @@ import Header from "@/components/dashboard/Header";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { getMe } from "@/services/getMe";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import GlowTheme from "@/components/shared/GlobalTheme";
 
 async function AsyncHeader() {
   const user = await getMe();
@@ -21,7 +22,7 @@ export default function DashboardLayout({
 }) {
   return (
     <TooltipProvider>
-      <SidebarProvider>
+      <SidebarProvider className="bg-transparent">
         <Suspense fallback={null}>
           <AsyncSidebar />
         </Suspense>
@@ -31,6 +32,7 @@ export default function DashboardLayout({
           </Suspense>
 
           <main className="w-full min-w-0">{children}</main>
+          <GlowTheme />
         </SidebarInset>
       </SidebarProvider>
     </TooltipProvider>

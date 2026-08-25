@@ -28,7 +28,6 @@ export const getCustomerBookings = async () => {
     const result = await res.json();
 
     return result;
-
   } catch (error: unknown) {
     return {
       success: false,
@@ -82,7 +81,7 @@ export const getCustomerDashboardData = async () => {
   });
 
   const result = await res.json();
-  console.log(result)
+  console.log(result);
   return result;
 };
 
@@ -109,4 +108,42 @@ export const cancelBooking = async (bookingId: string) => {
     revalidatePath("/dashboard/customer/my-bookings");
   }
   return result;
+};
+
+// get technician bookings
+export const getTechnicianBookings = async ({
+  query,
+}: {
+  query?: { [key: string]: string | string[] | undefined };
+}) => {
+  const params = new URLSearchParams();
+
+    if (query?.page) {
+    params.set("page", query.page as string);
+  }
+
+  if (query?.limit) {
+    params.set("limit", query.limit as string);
+  }
+  if (query?.status) {
+    params.set("status", query.status as string);
+  }
+
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/bookings/technician-bookings?${params}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `accessToken=${accessToken}`,
+      },
+    },
+  );
+
+  const data = await res.json();
+
+  return data;
 };

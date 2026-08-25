@@ -37,8 +37,26 @@ const ADMIN_SIDEBAR_ITEMS: SidebarMenuItems[] = [
   }
 ];
 
+const TECHNICIAN_SIDEBAR_ITEMS: SidebarMenuItems[] = [
+  {
+    label: "Dashboard",
+    href: "/dashboard/technician",
+    icon: LayoutDashboard,
+  },
+  {
+    label: "My Orders",
+    href: "/dashboard/technician/orders",
+    icon: ListIndentDecrease,
+  },
+  {
+    label: "Accept Bookings",
+    href: "/dashboard/technician/accept-booking",
+    icon: FileText,
+  }
+];
+
 export const sidebarMenuItems = {
   CUSTOMER: USER_SIDEBAR_ITEMS,
-  TECHNICIAN: [],
+  TECHNICIAN: TECHNICIAN_SIDEBAR_ITEMS,
   ADMIN: ADMIN_SIDEBAR_ITEMS,
 };
