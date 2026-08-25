@@ -58,7 +58,15 @@ const ProfileDropdown = ({ user }: { user: UserType }) => {
           )}
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href="/profile">Profile Settings</Link>
+          {user.data?.role === "CUSTOMER" ? (
+            <Link href="/dashboard/customer/profile">Profile Settings</Link>
+          ) : user.data?.role === "TECHNICIAN" ? (
+            <Link href="/dashboard/technician/profile">Profile Settings</Link>
+          ) : user.data?.role === "ADMIN" ? (
+            <Link href="/dashboard/admin/profile">Profile Settings</Link>
+          ) : (
+            ""
+          )}
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

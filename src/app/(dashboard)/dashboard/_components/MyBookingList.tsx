@@ -24,7 +24,7 @@ export default function MyBookingsTable({
   bookings: BookingType[];
 }) {
   return (
-    <div className="space-y-6 p-4 lg:p-8">
+    <div className="space-y-6  p-4 md:p-8 w-full container mx-auto">
       {/* ── Header ── */}
       <h2 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-white">
         My Bookings{" "}

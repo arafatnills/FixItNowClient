@@ -27,9 +27,9 @@ const GitHubButton = () => {
   }, []);
 
   return (
-    <div className="pt-2 max-md:hidden">
+    <div className="pt-2 max-md:hidden ">
       <a
-        className="github-button"
+        className="github-button "
         href="https://github.com/arafatnills"
         data-icon="octicon-star"
         data-size="large"

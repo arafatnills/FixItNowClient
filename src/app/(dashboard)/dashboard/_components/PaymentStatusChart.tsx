@@ -19,13 +19,16 @@ import {
 } from "@/components/ui/card";
 
 interface DashboardData {
-  totalPay: string | number;
-  totalPending: string | number;
-  totalCancelBooking: string | number;
+  totalPay: number;
+  totalCompletedBooking: number;
+  totalCancelBooking: number;
+  totalBooking: number;
 }
 
-const CustomTooltip = ({ active, payload }: TooltipContentProps<number, string>) => {
- 
+const CustomTooltip = ({
+  active,
+  payload,
+}: TooltipContentProps<number, string>) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 p-3 rounded-lg shadow-xl animate-in fade-in zoom-in-95 duration-200">
@@ -48,25 +51,28 @@ const CustomTooltip = ({ active, payload }: TooltipContentProps<number, string>)
 };
 
 export default function PaymentStatusChart({ data }: { data: DashboardData }) {
-
   const chartData = [
     {
       name: "Paid",
       value: Number(data.totalPay),
-      color: "#10b981", // Emerald
+      color: "#10B981", // Green — Success/Paid
     },
     {
-      name: "Pending",
-      value: Number(data.totalPending),
-      color: "#f59e0b", // Amber
+      name: "Completed Bookings",
+      value: Number(data.totalCompletedBooking),
+      color: "#3B82F6", // Blue — Completed
     },
     {
-      name: "Failed",
+      name: "Canceled Bookings",
       value: Number(data.totalCancelBooking),
-      color: "#ef4444", // Red
+      color: "#EF4444", // Red — Canceled
+    },
+    {
+      name: "Total Bookings",
+      value: Number(data.totalBooking),
+      color: "#8B5CF6", // Purple — Total/Overall
     },
   ];
-
 
   return (
     <Card className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -97,9 +103,18 @@ export default function PaymentStatusChart({ data }: { data: DashboardData }) {
                 ))}
               </Pie>
 
-              <Tooltip content={<CustomTooltip active={false} payload={[]} coordinate={undefined} accessibilityLayer={false} activeIndex={undefined} />} />
+              <Tooltip
+                content={
+                  <CustomTooltip
+                    active={false}
+                    payload={[]}
+                    coordinate={undefined}
+                    accessibilityLayer={false}
+                    activeIndex={undefined}
+                  />
+                }
+              />
 
-              
               <Legend
                 verticalAlign="bottom"
                 height={36}

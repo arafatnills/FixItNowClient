@@ -1,9 +1,8 @@
-import React from 'react'
+import DashboardSkeleton from '@/components/dashboard/OverViewSkeleton'
+
 
 const loading = () => {
-  return (
-    <div>loading</div>
-  )
+  return <DashboardSkeleton/>
 }
 
 export default loading

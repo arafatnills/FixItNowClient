@@ -15,12 +15,10 @@ export default function MyBookingsSkeleton() {
   const skeletonRows = Array.from({ length: 5 });
 
   return (
-    <div className="space-y-6 p-4 lg:p-8">
-      <div className="flex items-center gap-2">
-        <Skeleton className="h-8 w-32 md:w-40" />
-
-        <Skeleton className="h-6 w-10 rounded-md" />
-      </div>
+    <div className="space-y-6  p-4 md:p-8 w-full container mx-auto">
+      <h2 className="text-xl md:text-2xl font-bold flex gap-2 items-center text-slate-900 dark:text-white">
+        My Bookings <Skeleton className="h-6 w-10 rounded-md" />
+      </h2>
 
       {/* ── Shadcn Table Wrapper ── */}
       <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0a0a0a] overflow-hidden">

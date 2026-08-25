@@ -14,7 +14,7 @@ export type UserType = {
     name: string;
     email: string;
     role: string;
-    status: string;
+    status: "ACTIVE" | "BLOCKED";
     createdAt: string;
     updatedAt: string;
     profilePhoto: string;

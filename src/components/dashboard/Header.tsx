@@ -69,7 +69,7 @@ const Header = ({user}: {user: UserType}) => {
         </div>
 
         {/* RIGHT */}
-        <div className="ml-auto flex shrink-0 items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-4">
           <GitHubButton />
           <ModeToggle />
          <ProfileDropdown user={user}/>

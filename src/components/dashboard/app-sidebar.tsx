@@ -20,7 +20,6 @@ import { sidebarMenuItems } from "@/app/(dashboard)/dashboard/_config/sidebarMen
 import { SidebarMenuItems } from "@/lib/types";
 import { usePathname } from "next/navigation";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Button } from "../ui/button";
 
 export function AppSidebar({ user }: { user: UserType }) {
   const pathName = usePathname();
@@ -43,7 +42,7 @@ export function AppSidebar({ user }: { user: UserType }) {
             width={40}
             height={100}
             alt="logo"
-            className="shrink-0"
+            className="shrink-0 "
           />
 
           <span className="text-2xl font-bold text-teal-700 gap-2 dark:text-teal-500 flex items-center whitespace-nowrap group-data-[collapsible=icon]:hidden">
@@ -64,7 +63,7 @@ export function AppSidebar({ user }: { user: UserType }) {
                         <TooltipTrigger asChild>
                           <menu.icon />
                         </TooltipTrigger>
-                        <TooltipContent>
+                        <TooltipContent side="right">
                           <p>{menu.label}</p>
                         </TooltipContent>
                       </Tooltip>
@@ -77,9 +76,14 @@ export function AppSidebar({ user }: { user: UserType }) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup>Auth</SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <SidebarGroup>
+          <SidebarGroupContent>
+            
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarFooter>
     </Sidebar>
   );
 }
