@@ -35,8 +35,6 @@ export type BookingType = {
   } | null;
 };
 
-
-
 export enum BookingStatus {
   PENDING = "PENDING",
   ACCEPTED = "ACCEPTED",
@@ -71,4 +69,12 @@ export type Booking = {
 
   customer: BookingCustomer;
   service: BookingService;
+};
+
+export type QueryTypes = {
+  query?: { [key: string]: string | string[] | undefined };
+};
+
+export type SearchProp = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };

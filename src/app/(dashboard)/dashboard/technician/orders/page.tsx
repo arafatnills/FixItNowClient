@@ -1,6 +1,9 @@
-import { getTechnicianBookings } from "../../_actions/bookingActions";
+import {
+  getTechnicianBookings,
+  updateBookingStatus,
+} from "../../_actions/bookingActions";
 import { BookingTable } from "../_components/BookingTable";
-import { SelectFilters } from "../_components/Filters";
+import { SelectFilters } from "../../../../../components/shared/FiltersByStatus";
 import { GlobalPagination } from "../../../../../components/shared/Pagination";
 
 type PageProps = {
@@ -10,7 +13,6 @@ type PageProps = {
 export default async function BookingsPage({ searchParams }: PageProps) {
   const query = await searchParams;
   const { data, meta } = await getTechnicianBookings({ query });
-  console.log(data);
 
   return (
     <div className="space-y-6 p-6 container mx-auto">
@@ -32,18 +34,14 @@ export default async function BookingsPage({ searchParams }: PageProps) {
 
       <BookingTable
         bookings={data}
-        // onStatusChange={async (bookingId, status) => {
-        //   console.log({
-        //     bookingId,
-        //     status,
-        //   });
-
-        //   //
-        //   // await updateBookingStatus({
-        //   //   bookingId,
-        //   //   status,
-        //   // });
-        // }}
+        onStatusChange={async (bookingId, status) => {
+          "use server";
+          try {
+            await updateBookingStatus({ bookingId, status });
+          } catch (error) {
+            console.error(error);
+          }
+        }}
       />
       {meta && meta.totalPages > 0 && (
         <GlobalPagination

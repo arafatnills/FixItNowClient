@@ -27,7 +27,7 @@ export default function StatCard({
     ? `৳${Number(value).toLocaleString("en-US")}`
     : value;
 
-    console.log(value)
+   
   return (
     <Card className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow duration-200">
       <CardContent className="p-6">

@@ -5,14 +5,12 @@ import SidebarFilters from "./_components/SidebarFilters";
 import ServiceList from "./_components/ServiceList";
 import { servicesData } from "./_actions/serviceAction";
 import { getCategories } from "./_actions/getAllCategories";
-import { ServicePagination } from "./_components/Pagination";
 import { GlobalPagination } from "@/components/shared/Pagination";
+import { SearchProp } from "@/lib/types";
 
-type PageProps = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
 
-export default async function ServicesPage({ searchParams }: PageProps) {
+
+export default async function ServicesPage({ searchParams }: SearchProp) {
   const query = await searchParams;
   const { services, meta } = await servicesData({ query });
   const categories = await getCategories();

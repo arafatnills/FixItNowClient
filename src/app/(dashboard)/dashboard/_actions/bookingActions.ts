@@ -1,11 +1,25 @@
 "use server";
+import { BookingStatus, QueryTypes } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 // ge all customer bookings
-export const getCustomerBookings = async () => {
+export const getCustomerBookings = async ({ query }: QueryTypes) => {
   const cookeStore = await cookies();
   const accessToken = cookeStore.get("accessToken")?.value;
+
+  const params = new URLSearchParams();
+
+  if (query?.page) {
+    params.set("page", query.page as string);
+  }
+
+  if (query?.limit) {
+    params.set("limit", query.limit as string);
+  }
+  if (query?.status) {
+    params.set("status", query.status as string);
+  }
 
   if (!accessToken) {
     return {
@@ -16,7 +30,7 @@ export const getCustomerBookings = async () => {
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_API_URL}/api/bookings/my-bookings`,
+      `${process.env.BACKEND_API_URL}/api/bookings/my-bookings?${params}`,
       {
         headers: {
           Cookie: `accessToken=${accessToken}`,
@@ -81,7 +95,6 @@ export const getCustomerDashboardData = async () => {
   });
 
   const result = await res.json();
-  console.log(result);
   return result;
 };
 
@@ -111,14 +124,10 @@ export const cancelBooking = async (bookingId: string) => {
 };
 
 // get technician bookings
-export const getTechnicianBookings = async ({
-  query,
-}: {
-  query?: { [key: string]: string | string[] | undefined };
-}) => {
+export const getTechnicianBookings = async ({ query }: QueryTypes) => {
   const params = new URLSearchParams();
 
-    if (query?.page) {
+  if (query?.page) {
     params.set("page", query.page as string);
   }
 
@@ -144,6 +153,37 @@ export const getTechnicianBookings = async ({
   );
 
   const data = await res.json();
+
+  return data;
+};
+
+export const updateBookingStatus = async ({
+  bookingId,
+  status,
+}: {
+  bookingId: string;
+  status: BookingStatus;
+}) => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/bookings/my-bookings/${bookingId}/accept`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `accessToken=${accessToken}`,
+      },
+      body: JSON.stringify({ status }),
+    },
+  );
+
+  const data = await res.json();
+
+  if (data.success) {
+    revalidatePath("/dashboard/technician/orders");
+  }
 
   return data;
 };

@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
 import { BookingStatusBadge } from "./BookingStatusBadge";
 import { BookingStatus } from "@/lib/types";
 
@@ -44,6 +43,8 @@ export function BookingStatusDropdown({
   loading = false,
   onStatusChange,
 }: BookingStatusDropdownProps) {
+  const cancelableStatus = ["PENDING", "COMPLETED", "CANCELLED", "INPROGRESS"];
+  const isAlreadyCancelled = status === BookingStatus.CANCELLED;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -61,11 +62,13 @@ export function BookingStatusDropdown({
       <DropdownMenuContent align="start" className="w-44">
         {Object.values(BookingStatus).map((statusValue) => {
           const isCurrent = status === statusValue;
-
+          const isRestrictedOption = cancelableStatus.includes(statusValue);
+          const isDisabled =
+            isCurrent || isAlreadyCancelled || isRestrictedOption;
           return (
             <DropdownMenuItem
               key={statusValue}
-              disabled={isCurrent}
+              disabled={isDisabled}
               onClick={() => onStatusChange(statusValue)}
               className="cursor-pointer"
             >
@@ -76,7 +79,7 @@ export function BookingStatusDropdown({
               {statusLabels[statusValue]}
 
               {isCurrent && (
-                <span className="ml-auto text-[10px] text-muted-foreground">
+                <span className="ml-auto  text-[10px] text-muted-foreground">
                   Current
                 </span>
               )}

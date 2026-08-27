@@ -174,7 +174,7 @@ export function BookingTableRow({
           <DropdownMenuContent align="end">
             <DropdownMenuItem>
               <Eye className="mr-2 h-4 w-4" />
-              View Details
+              View
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

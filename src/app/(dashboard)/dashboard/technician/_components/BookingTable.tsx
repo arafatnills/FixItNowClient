@@ -1,11 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
-import {
-  Table,
-} from "@/components/ui/table";
-
+import { Table } from "@/components/ui/table";
 
 import { BookingTableHeader } from "./BookingTableHeader";
 import { BookingTableBody } from "./BookingTableBody";
@@ -13,31 +10,27 @@ import { Booking, BookingStatus } from "@/lib/types";
 
 interface BookingTableProps {
   bookings: Booking[];
-  onStatusChange?: (
-    bookingId: string,
-    status: BookingStatus,
-  ) => void;
+  onStatusChange?: (bookingId: string, status: BookingStatus) => Promise<void>;
 }
 
-export function BookingTable({
-  bookings,
-  onStatusChange,
-}: BookingTableProps) {
-  const [updatingId, setUpdatingId] = useState<string | null>(
-    null,
-  );
+export function BookingTable({ bookings, onStatusChange }: BookingTableProps) {
+  const [updatingId, setUpdatingId] = useState<string | null>(null);
+
+  const [isPending, startTransition] = useTransition();
 
   const handleStatusChange = async (
     bookingId: string,
     status: BookingStatus,
   ) => {
-    try {
-      setUpdatingId(bookingId);
+    setUpdatingId(bookingId);
 
-      await onStatusChange?.(bookingId, status);
-    } finally {
-      setUpdatingId(null);
-    }
+    startTransition(async () => {
+      try {
+        await onStatusChange?.(bookingId, status);
+      } finally {
+        setUpdatingId(null);
+      }
+    });
   };
 
   return (
@@ -47,7 +40,7 @@ export function BookingTable({
 
         <BookingTableBody
           bookings={bookings}
-          updatingId={updatingId}
+          updatingId={isPending ? updatingId : null}
           onStatusChange={handleStatusChange}
         />
       </Table>

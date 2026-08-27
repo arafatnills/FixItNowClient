@@ -46,13 +46,9 @@ const TECHNICIAN_SIDEBAR_ITEMS: SidebarMenuItems[] = [
   {
     label: "My Orders",
     href: "/dashboard/technician/orders",
-    icon: ListIndentDecrease,
-  },
-  {
-    label: "Accept Bookings",
-    href: "/dashboard/technician/accept-booking",
     icon: FileText,
-  }
+  },
+ 
 ];
 
 export const sidebarMenuItems = {
