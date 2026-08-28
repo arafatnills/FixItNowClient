@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
 
 interface VisualContainerProps {
   children: React.ReactNode;
@@ -368,7 +369,7 @@ const IntegrationCard = ({
           asChild
           className="h-10 w-fit rounded-full px-5 hover:bg-primary/80 cursor-pointer"
         >
-          <a href={url}>Learn more</a>
+          <Link href={url}>Learn more</Link>
         </Button>
       </CardContent>
     </Card>

@@ -1,5 +1,5 @@
 import { SidebarMenuItems } from "@/lib/types";
-import { FileText, LayoutDashboard, ListIndentDecrease, UserRoundCog } from "lucide-react";
+import { FileText, LayoutDashboard, ListIndentDecrease, NotebookPen, UserRoundCog } from "lucide-react";
 
 const USER_SIDEBAR_ITEMS: SidebarMenuItems[] = [
   {
@@ -44,12 +44,24 @@ const TECHNICIAN_SIDEBAR_ITEMS: SidebarMenuItems[] = [
     icon: LayoutDashboard,
   },
   {
+    label: "My Services",
+    href: "/dashboard/technician/my-services",
+    icon: NotebookPen,
+  },
+  {
     label: "My Orders",
     href: "/dashboard/technician/orders",
     icon: FileText,
   },
  
 ];
+
+
+
+
+
+
+
 
 export const sidebarMenuItems = {
   CUSTOMER: USER_SIDEBAR_ITEMS,

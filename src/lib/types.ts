@@ -78,3 +78,37 @@ export type QueryTypes = {
 export type SearchProp = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
+
+
+
+
+
+export interface Category {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ServiceData {
+  id: string;
+  serviceName: string;
+  description: string;
+  thumbnail: string;
+  isPopular: boolean;
+  categoriesId: string;
+  technicianId: string;
+  price: number;
+  city: string;
+  area: string;
+  createdAt: string; 
+  updatedAt: string; 
+  category: Category;
+}
+
+export interface CreateServiceResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: ServiceData;
+}

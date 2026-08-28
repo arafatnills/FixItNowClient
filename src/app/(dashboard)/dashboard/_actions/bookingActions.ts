@@ -1,6 +1,6 @@
 "use server";
-import { BookingStatus, QueryTypes } from "@/lib/types";
-import { revalidatePath } from "next/cache";
+import { BookingStatus, CreateServiceResponse, QueryTypes } from "@/lib/types";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 // ge all customer bookings
@@ -186,4 +186,86 @@ export const updateBookingStatus = async ({
   }
 
   return data;
+};
+
+// get only technician created services
+export const getTechnicianServices = async () => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const res = await fetch(
+    `${process.env.BACKEND_API_URL}/api/services/technician-services`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        cookie: `accessToken=${accessToken}`,
+      },
+    },
+  );
+
+  const data = await res.json();
+
+  return data;
+};
+
+// update technician posts
+export const updateTechnicianServices = async (id: string) => {};
+
+// create technician posts
+export const createTechnicianServices = async (
+  prevState: CreateServiceResponse,
+  fromData: FormData,
+) => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const serviceName = fromData.get("serviceName");
+  const price = fromData.get("price");
+  const categoriesId = fromData.get("categoriesId");
+  const city = fromData.get("city");
+  const area = fromData.get("area");
+  const description = fromData.get("description");
+  const thumbnail = fromData.get("thumbnail");
+
+  const payload = {
+    serviceName,
+    price: Number(price),
+    city,
+    categoriesId,
+    area,
+    description,
+    thumbnail,
+  };
+
+  const response = await fetch(`${process.env.BACKEND_API_URL}/api/services`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await response.json();
+
+  if (result.success) {
+    revalidateTag("services", {
+      expire: 0,
+    });
+  }
+
+  return result;
+};
+
+// get all categories
+export const getAllCategories = async () => {
+  try {
+    const res = await fetch(`${process.env.BACKEND_API_URL}/api/categories`, {
+      cache: "force-cache",
+    });
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
 };

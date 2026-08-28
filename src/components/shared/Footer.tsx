@@ -77,13 +77,13 @@ export default function Footer() {
             <div className="flex items-center gap-5 pt-2">
               {socialLinks.map((link, index) => {
                 return (
-                  <a
+                  <Link
                     key={index}
                     href={link.href}
                     className="text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
                   >
                     {link.icon}
-                  </a>
+                  </Link>
                 );
               })}
             </div>

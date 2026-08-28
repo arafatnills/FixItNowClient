@@ -57,7 +57,7 @@ export function AppSidebar({ user }: { user: UserType }) {
             <SidebarMenu>
               {navItems.map((menu) => (
                 <SidebarMenuItem key={menu.href}>
-                  <SidebarMenuButton isActive={pathName === menu.href} asChild>
+                  <SidebarMenuButton  isActive={pathName === menu.href} asChild>
                     <Link href={menu.href}>
                       <Tooltip>
                         <TooltipTrigger asChild>

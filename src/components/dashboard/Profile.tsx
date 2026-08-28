@@ -1,5 +1,4 @@
 import { getMe } from "@/services/getMe";
-import React from "react";
 import ProfileDropdown from "../shared/ProfileDropdown";
 
 const Profile = async () => {

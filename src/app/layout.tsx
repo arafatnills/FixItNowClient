@@ -73,7 +73,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         inter.variable,
       )}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden">
+      <body suppressHydrationWarning className="min-h-full flex flex-col overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

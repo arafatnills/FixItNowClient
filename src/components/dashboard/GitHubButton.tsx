@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 
 const GitHubButton = () => {
@@ -28,7 +29,7 @@ const GitHubButton = () => {
 
   return (
     <div className="pt-2 max-md:hidden ">
-      <a
+      <Link
         className="github-button "
         href="https://github.com/arafatnills"
         data-icon="octicon-star"
@@ -37,7 +38,7 @@ const GitHubButton = () => {
         aria-label="Star arafatnills on GitHub"
       >
         Star
-      </a>
+      </Link>
     </div>
   );
 };

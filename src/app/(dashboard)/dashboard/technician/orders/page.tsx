@@ -19,11 +19,11 @@ export default async function BookingsPage({ searchParams }: PageProps) {
       <div className="flex items-center justify-between">
         <div className="">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl font-bold">Bookings </h1>
+            <h1 className="text-2xl font-bold">Orders </h1>
             <span className="text-xl">({meta?.total})</span>
           </div>
           <p className="text-sm text-muted-foreground">
-            Manage and update customer bookings.
+            Manage Orders and update customer bookings.
           </p>
         </div>
 
