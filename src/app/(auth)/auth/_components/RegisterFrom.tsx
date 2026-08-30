@@ -31,7 +31,7 @@ const RegisterForm = () => {
   useEffect(() => {
     if (state.success) {
       toast.success("account successfully created!");
-      router.push("/auth/login");
+      router.replace("/auth/login");
     }
   }, [state, router]);
 

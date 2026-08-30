@@ -24,7 +24,7 @@ export default function ServiceHeader({ total }: { total: number }) {
       } else {
         params.delete("q");
       }
-      router.push(`${pathName}?${params.toString()}`);
+      router.replace(`${pathName}?${params.toString()}`, {scroll: false});
     }, 500);
   };
 

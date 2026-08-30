@@ -7,10 +7,7 @@ import {
   Wrench,
 } from "lucide-react";
 
-import {
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 import {
   DropdownMenu,
@@ -21,17 +18,14 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-
 import { BookingStatusDropdown } from "./BookingStatusDropdown";
 import { Booking, BookingStatus } from "@/lib/types";
+import Link from "next/link";
 
 interface BookingTableRowProps {
   booking: Booking;
   loading?: boolean;
-  onStatusChange: (
-    bookingId: string,
-    status: BookingStatus,
-  ) => void;
+  onStatusChange: (bookingId: string, status: BookingStatus) => void;
 }
 
 const formatDate = (date: string) => {
@@ -72,9 +66,7 @@ export function BookingTableRow({
           </div>
 
           <div className="min-w-0">
-            <p className="font-medium">
-              #{booking.id.slice(0, 8)}
-            </p>
+            <p className="font-medium">#{booking.id.slice(0, 8)}</p>
 
             <p className="text-xs text-muted-foreground">
               {formatDate(booking.createdAt)}
@@ -152,9 +144,7 @@ export function BookingTableRow({
         <BookingStatusDropdown
           status={booking.status}
           loading={loading}
-          onStatusChange={(status) =>
-            onStatusChange(booking.id, status)
-          }
+          onStatusChange={(status) => onStatusChange(booking.id, status)}
         />
       </TableCell>
 
@@ -162,19 +152,17 @@ export function BookingTableRow({
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-8 w-8"
-            >
+            <Button variant="ghost" size="icon" className="h-8 w-8">
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>
-              <Eye className="mr-2 h-4 w-4" />
-              View
+            <DropdownMenuItem asChild>
+              <Link href={`/services/${booking.serviceId}`} className="flex items-center">
+                <Eye className="mr-2 h-4 w-4" />
+                View
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

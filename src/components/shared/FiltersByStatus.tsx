@@ -37,9 +37,9 @@ export function SelectFilters() {
   const currentStatus = searchParams.get("status") || "";
   const handleFilterChange = (value: string) => {
     if (value === "ALL") {
-      router.push(pathName);
+      router.replace(pathName, {scroll: false});
     } else {
-      router.push(`${pathName}?status=${value}`);
+      router.replace(`${pathName}?status=${value}`, {scroll: false});
     }
   };
   return (

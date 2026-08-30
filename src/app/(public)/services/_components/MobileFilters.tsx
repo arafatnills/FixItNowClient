@@ -39,7 +39,7 @@ export default function MobileFilters({ cate }: { cate: Category[] }) {
       } else {
         params.delete("q");
       }
-      router.push(`${pathName}?${params.toString()}`);
+      router.replace(`${pathName}?${params.toString()}`, {scroll: false});
     }, 500);
   };
 

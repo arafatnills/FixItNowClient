@@ -32,7 +32,7 @@ export default function SidebarFilters({ cate }: { cate: Category[] }) {
     params.set("page", "1");
 
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`);
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false});
     });
   };
 
@@ -52,7 +52,7 @@ export default function SidebarFilters({ cate }: { cate: Category[] }) {
     next.forEach((c) => params.append("category", c));
     params.set("page", "1");
     startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`);
+      router.replace(`${pathname}?${params.toString()}`, {scroll: false});
     });
   };
 
@@ -62,7 +62,7 @@ export default function SidebarFilters({ cate }: { cate: Category[] }) {
     (searchParams.get("q") ? 1 : 0);
 
   const clearFilters = () => {
-    router.push(pathname);
+    router.replace(pathname, {scroll: false});
   };
 
   return (

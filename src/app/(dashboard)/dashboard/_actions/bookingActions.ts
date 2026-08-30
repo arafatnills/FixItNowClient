@@ -300,9 +300,6 @@ export const updateProfile = async (
   prevState: UpdateProfileInterface,
   formData: FormData,
 ): Promise<UpdateProfileInterface> => {
-  //  name: 'Arafat',
-  // experience: '23',
-  // bio: 'bio'
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
 

@@ -19,7 +19,7 @@ export function HeroSearch() {
     const trimmed = query.trim();
     const params = new URLSearchParams();
     if (trimmed) params.set("q", trimmed);
-    router.push(`/services?${params.toString()}`);
+    router.replace(`/services?${params.toString()}`, {scroll: false});
 
     setQuery('')
   };
