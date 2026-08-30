@@ -75,7 +75,7 @@ export default function SidebarFilters({ cate }: { cate: Category[] }) {
           <Button
             variant="link"
             onClick={clearFilters}
-            className="p-0 mb-5 text-white cursor-pointer rounded-0"
+            className="p-0 mb-5 dark:text-white cursor-pointer rounded-0"
           >
             <X className="w-4 h-4 mr-1" />
             Clear Filters ({activeFilterCount})

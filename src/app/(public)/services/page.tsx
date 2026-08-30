@@ -18,7 +18,7 @@ export default async function ServicesPage({ searchParams }: SearchProp) {
   return (
     <div className="min-h-screen pt-10 pb-20">
       <div className="container mx-auto px-8 ">
-        <ServiceHeader />
+        <ServiceHeader total={meta.total} />
 
         <MobileFilters cate={categories} />
 

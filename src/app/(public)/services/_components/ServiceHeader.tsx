@@ -4,8 +4,9 @@ import { Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useRef } from "react";
+import Image from "next/image";
 
-export default function ServiceHeader() {
+export default function ServiceHeader({ total }: { total: number }) {
   const searchTrams = useSearchParams();
   const pathName = usePathname();
   const router = useRouter();
@@ -30,9 +31,12 @@ export default function ServiceHeader() {
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-6">
       <div className="w-full md:w-1/2 space-y-6">
-        <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white">
-          Our Services
-        </h1>
+        <div className="flex items-center gap-2 ">
+          <h1 className="text-3xl  font-extrabold ">
+            Our Services
+          </h1>
+          <span className="text-teal-500 text-2xl ">({total})</span>
+        </div>
         <p className="text-slate-600 dark:text-slate-400 text-base md:text-lg">
           Find professional, reliable home services to keep your space in
           perfect condition.
@@ -56,7 +60,7 @@ export default function ServiceHeader() {
       </div>
 
       {/* Optimized Next Image */}
-      {/* <div className="w-full hidden md:block md:w-1/2 h-56 md:h-72 rounded-2xl overflow-hidden relative">
+      <div className="w-full hidden md:block md:w-1/2 h-56 md:h-72 rounded-2xl overflow-hidden relative">
         <Image
           src="https://images.unsplash.com/photo-1505798577917-a65157d3320a?q=80&w=800&auto=format&fit=crop"
           alt="Home Services"
@@ -65,7 +69,7 @@ export default function ServiceHeader() {
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-cover"
         />
-      </div> */}
+      </div>
     </div>
   );
 }

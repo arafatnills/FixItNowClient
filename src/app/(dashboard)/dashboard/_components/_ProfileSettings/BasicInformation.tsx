@@ -62,7 +62,7 @@ export default function BasicInformation({
               />
 
               <Input
-                defaultValue={user.data.name}
+                defaultValue={user.data?.name}
                 id="displayName"
                 placeholder="Enter your full name"
                 className="
@@ -93,7 +93,7 @@ export default function BasicInformation({
 
               <Input
                 id="email"
-                value={user.data.email}
+                value={user.data?.email}
                 disabled
                 className="
                   h-11 rounded-lg

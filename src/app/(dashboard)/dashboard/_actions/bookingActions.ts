@@ -1,5 +1,10 @@
 "use server";
-import { BookingStatus, CreateServiceResponse, QueryTypes } from "@/lib/types";
+import {
+  BookingStatus,
+  CreateServiceResponse,
+  QueryTypes,
+  UpdateProfileInterface,
+} from "@/lib/types";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
@@ -208,9 +213,6 @@ export const getTechnicianServices = async () => {
   return data;
 };
 
-// update technician posts
-export const updateTechnicianServices = async (id: string) => {};
-
 // create technician posts
 export const createTechnicianServices = async (
   prevState: CreateServiceResponse,
@@ -268,4 +270,74 @@ export const getAllCategories = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+// get technician stats
+export const getTechnicianStats = async () => {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const response = await fetch(
+    `${process.env.BACKEND_API_URL}/api/technician/statistic`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+      },
+    },
+  );
+
+  const data = await response.json();
+
+  return data;
+};
+// update technician posts
+export const updateTechnicianServices = async (id: string) => {};
+
+// update profile
+export const updateProfile = async (
+  prevState: UpdateProfileInterface,
+  formData: FormData,
+): Promise<UpdateProfileInterface> => {
+  //  name: 'Arafat',
+  // experience: '23',
+  // bio: 'bio'
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
+  const name = formData.get("name");
+  const experience = formData.get("experience");
+  const bio = formData.get("bio");
+  const profilePhoto = formData.get("profilePhoto");
+
+  const payload = {
+    name,
+    experience,
+    bio,
+    profilePhoto,
+  };
+
+  const res = await fetch(`${process.env.BACKEND_API_URL}/api/users/update`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: `accessToken=${accessToken}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    revalidateTag("my-profile", {
+      expire: 0,
+    });
+  }
+
+  return {
+    success: true,
+    status: 200,
+    message: "Profile updated successfully!",
+  };
 };

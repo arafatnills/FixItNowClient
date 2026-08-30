@@ -31,7 +31,7 @@ export function GlobalPagination({
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", pageNumber.toString());
-    params.set("limit", String(10));
+    params.set("limit", String(6));
     return `${pathname}?${params.toString()}`;
   };
 

@@ -7,6 +7,8 @@ import ServiceAbout from "./_components/ServiceAbout";
 import ServiceSpecs from "./_components/ServiceSpecs";
 import ServiceHowItWorks from "./_components/ServiceHowItWorks";
 import DesktopBookingCard from "./_components/DesktopBookingCard";
+import { getMe } from "@/services/getMe";
+import MobileBookingBtn from "./_components/MobileBookingBtn";
 
 const formatPrice = (price: string | number) =>
   `৳${Number(price || 0).toLocaleString("en-US")}`;
@@ -21,8 +23,9 @@ const formatDate = (value: string) =>
 
 type PageProps = { params: Promise<{ slug: string }> };
 
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const service = await getSingleService(slug);
 
@@ -42,6 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ServiceDetailsPage({ params }: PageProps) {
   const { slug } = await params;
   const service = await getSingleService(slug);
+  const user = await getMe();
 
   if (!service) {
     return <div className="">not found</div>;
@@ -56,23 +60,37 @@ export default async function ServiceDetailsPage({ params }: PageProps) {
   return (
     <main className="min-h-screen pb-28 lg:pb-16 ">
       <div className="mx-auto w-full container px-4 py-5 sm:px-6 lg:px-8 lg:py-10">
-        
         <BreadcrumbNav serviceName={service.serviceName} />
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start lg:gap-10">
           <div className="min-w-0 space-y-6">
-            <ServiceHero imageUrl={imageUrl} serviceName={service.serviceName} categoryName={categoryName} />
-            <ServiceHeader serviceName={service.serviceName} location={location} />
+            <ServiceHero
+              imageUrl={imageUrl}
+              serviceName={service.serviceName}
+              categoryName={categoryName}
+            />
+            <ServiceHeader
+              serviceName={service.serviceName}
+              location={location}
+            />
+            <MobileBookingBtn
+              formattedPrice={formattedPrice}
+              serviceId={service.id}
+              technicianId={service.technicianId}
+            />
             <ServiceAbout description={service.description} />
-            <ServiceSpecs categoryName={categoryName} location={location} formattedDate={formattedDate} />
+            <ServiceSpecs
+              categoryName={categoryName}
+              location={location}
+              formattedDate={formattedDate}
+            />
             <ServiceHowItWorks />
           </div>
 
-          <DesktopBookingCard 
-            formattedPrice={formattedPrice} 
-            serviceId={service.id} 
-            technicianId={service.technicianId} 
-            
+          <DesktopBookingCard
+            formattedPrice={formattedPrice}
+            serviceId={service.id}
+            technicianId={service.technicianId}
           />
         </div>
       </div>

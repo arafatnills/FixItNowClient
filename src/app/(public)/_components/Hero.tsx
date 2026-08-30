@@ -11,7 +11,7 @@ const Hero = () => {
         <h1 className="text-3xl mb-2 font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
           Expert Home Services,  <br className="hidden md:block" />
         </h1>
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl dark:text-teal-500">
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-teal-500">
             <HeroType/>
             {/* Just a Click Away */}
           </h1>

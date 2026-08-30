@@ -36,7 +36,7 @@ export default function PaymentSuccessCard({
   user,
 }: PaymentSuccessCardProps) {
   const [copied, setCopied] = useState<CopyType>(null);
-  const role = user.data.role;
+  const role = user.data?.role;
   let navItems = "/dashboard";
   
 

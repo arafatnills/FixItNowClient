@@ -37,7 +37,7 @@ export default function ProfileHero({
   const isActive = user.data.status === "ACTIVE";
 
   const initials =
-    user.data.name
+    user.data?.name
       ?.split(" ")
       .map((name) => name.charAt(0))
       .join("")
@@ -45,7 +45,7 @@ export default function ProfileHero({
       .toUpperCase() || "U";
 
   const joinedDate = new Date(
-    user.data.createdAt,
+    user.data?.createdAt,
   ).toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",
@@ -140,7 +140,7 @@ export default function ProfileHero({
           >
             <Sparkles className="mr-1.5 h-3.5 w-3.5" />
 
-            {user.data.role === "admin"
+            {user.data?.role === "admin"
               ? "Admin Account"
               : "Member Account"}
           </Badge>
@@ -164,8 +164,8 @@ export default function ProfileHero({
               "
             >
               <AvatarImage
-                src={user.data.profilePhoto}
-                alt={user.data.name}
+                src={user.data?.profilePhoto}
+                alt={user.data?.name}
                 className="object-cover"
               />
 
@@ -184,12 +184,12 @@ export default function ProfileHero({
           {/* Identity */}
           <div className="flex-1 text-center md:pb-2 md:text-left">
             <h2 className="pt-15 text-2xl font-bold tracking-tight text-slate-900 dark:text-foreground">
-              {user.data.name}
+              {user.data?.name}
             </h2>
 
             <p className="mt-1 flex items-center justify-center gap-1.5 text-sm text-muted-foreground md:justify-start">
               <Mail className="h-3.5 w-3.5 text-[#006B7A]" />
-              {user.data.email}
+              {user.data?.email}
             </p>
 
             <div className="mt-3 flex flex-wrap justify-center gap-2 md:justify-start">

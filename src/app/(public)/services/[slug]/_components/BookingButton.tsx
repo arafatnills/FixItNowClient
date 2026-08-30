@@ -70,7 +70,7 @@ const BookingButton = ({
         <Button
           disabled={!role || role === "TECHNICIAN"}
           type="button"
-          className="h-11 w-full rounded-full bg-teal-600 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700 cursor-pointer"
+          className="h-11 md:w-full  rounded-full bg-teal-600 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700 cursor-pointer"
         >
           Book Now
         </Button>

@@ -23,7 +23,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function AppSidebar({ user }: { user: UserType }) {
   const pathName = usePathname();
-  const role = user.data.role;
+  const role = user.data?.role;
   let navItems: SidebarMenuItems[] = [];
 
   if (role === "ADMIN") {

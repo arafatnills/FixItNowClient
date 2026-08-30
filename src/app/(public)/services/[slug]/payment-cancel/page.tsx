@@ -14,7 +14,7 @@ import {
 
 export default async function PaymentSuccessPage() {
   const user = await getMe();
-  const role = user.data.role;
+  const role = user.data?.role;
 
   let navItems = "/dashboard";
 

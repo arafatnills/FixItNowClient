@@ -1,5 +1,5 @@
 import { SidebarMenuItems } from "@/lib/types";
-import { FileText, LayoutDashboard, ListIndentDecrease, NotebookPen, UserRoundCog } from "lucide-react";
+import { FileText, LayoutDashboard, ListIndentDecrease, NotebookPen } from "lucide-react";
 
 const USER_SIDEBAR_ITEMS: SidebarMenuItems[] = [
   {
@@ -12,11 +12,7 @@ const USER_SIDEBAR_ITEMS: SidebarMenuItems[] = [
     href: "/dashboard/customer/my-booking",
     icon: FileText,
   },
-  {
-    label: "Profile",
-    href: "/dashboard/customer/profile",
-    icon: UserRoundCog
-  }
+ 
 ];
 
 const ADMIN_SIDEBAR_ITEMS: SidebarMenuItems[] = [

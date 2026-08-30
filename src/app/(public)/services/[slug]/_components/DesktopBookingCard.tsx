@@ -17,7 +17,6 @@ export default async function DesktopBookingCard({
 }) {
   const user = await getMe();
 
-
   return (
     <aside className="hidden lg:block">
       <Card className="sticky top-24 gap-0 border-slate-200 p-0 shadow-sm dark:border-slate-800">
@@ -34,13 +33,11 @@ export default async function DesktopBookingCard({
             </p>
           </div>
           <div className="space-y-2.5">
-            {/* <Button asChild className="h-11 w-full rounded-full bg-teal-600 text-white shadow-md shadow-teal-500/20 hover:bg-teal-700">
-              <Link href={`/booking/${serviceId}`}>Book Now</Link>
-            </Button> */}
-
-        
-
-            <BookingButton serviceId={serviceId} technicianId={technicianId} user={user}/>
+            <BookingButton
+              serviceId={serviceId}
+              technicianId={technicianId}
+              user={user}
+            />
 
             <Button
               asChild

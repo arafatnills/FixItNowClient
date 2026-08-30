@@ -2,16 +2,12 @@ import Image from "next/image";
 import {
   User,
   Mail,
-  Crown,
   ShieldCheck,
   LayoutDashboard,
   Settings,
-  CreditCard,
-  Upload,
   Sparkles,
   CheckCircle2,
   LockKeyhole,
-  Camera,
   BriefcaseBusiness,
   Award,
   CalendarDays,
@@ -43,22 +39,22 @@ import { Separator } from "@/components/ui/separator";
 import { getMe } from "@/services/getMe";
 import { UserType } from "@/components/shared/NavbarAuthSection";
 import { ProfileStatCard } from "./_ProfileSettings/ProfileStatCard";
+import ProfileUPdateFrom from "./_ProfileSettings/ProfileUPdateFrom";
 
 export default async function ProfileSettings() {
   const user: UserType = await getMe();
-
   const profile = user.data.profile;
   const isActive = user.data.status === "ACTIVE";
 
   const initials =
-    user.data.name
+    user.data?.name
       ?.split(" ")
       .map((name) => name.charAt(0))
       .join("")
       .slice(0, 2)
       .toUpperCase() || "U";
 
-  const joinedDate = new Date(user.data.createdAt).toLocaleDateString("en-US", {
+  const joinedDate = new Date(user.data?.createdAt).toLocaleDateString("en-US", {
     month: "short",
     year: "numeric",
   });
@@ -253,7 +249,7 @@ export default async function ProfileSettings() {
                   >
                     <Sparkles className="mr-1.5 h-3.5 w-3.5" />
 
-                    {user.data.role === "admin"
+                    {user.data?.role === "admin"
                       ? "Admin Account"
                       : "Member Account"}
                   </Badge>
@@ -279,8 +275,8 @@ export default async function ProfileSettings() {
                       "
                     >
                       <AvatarImage
-                        src={user.data.profilePhoto}
-                        alt={user.data.name}
+                        src={user.data?.profilePhoto}
+                        alt={user.data?.name}
                         className="object-cover"
                       />
 
@@ -297,16 +293,16 @@ export default async function ProfileSettings() {
                   </div>
 
                   {/* Identity */}
-                  <div className="flex-1  text-center md:pb-2 md:text-left">
+                  <div className="flex-1 md:pt-12 text-center md:pb-2 md:text-left">
                     <div className="flex  flex-col gap-2 md:flex-row md:items-center">
-                      <h2 className="text-2xl pt-15 font-bold tracking-tight text-slate-900 dark:text-foreground">
-                        {user.data.name}
+                      <h2 className="text-2xl  font-bold tracking-tight text-slate-900 dark:text-foreground">
+                        {user.data?.name}
                       </h2>
                     </div>
 
                     <p className="mt-1 flex items-center justify-center gap-1.5 text-sm text-muted-foreground md:justify-start">
                       <Mail className="h-3.5 w-3.5 text-[#006B7A]" />
-                      {user.data.email}
+                      {user.data?.email}
                     </p>
 
                     <div className="mt-3 flex flex-wrap justify-center gap-2 md:justify-start">
@@ -535,324 +531,17 @@ export default async function ProfileSettings() {
               </CardHeader>
 
               <CardContent className="p-5 sm:p-7">
-                <form className="space-y-8">
-                  {/* =================================================
-                      PHOTO
-                  ================================================== */}
-                  <div>
-                    <div className="mb-4">
-                      <Label className="text-sm font-semibold">
-                        Profile Photo
-                      </Label>
-
-                      <p className="mt-1 text-xs text-muted-foreground">
-                        Upload a clear photo for your professional profile.
-                      </p>
-                    </div>
-
-                    <div
-                      className="
-                        flex flex-col gap-5
-                        rounded-2xl border
-                        bg-muted/20 p-5
-                        sm:flex-row sm:items-center
-                      "
-                    >
-                      <div className="relative mx-auto sm:mx-0">
-                        <Avatar
-                          className="
-                            h-24 w-24
-                            border-4 border-white
-                            shadow-md
-                            dark:border-card
-                          "
-                        >
-                          <AvatarImage
-                            src={user.data.profilePhoto}
-                            alt={user.data.name}
-                            className="object-cover"
-                          />
-
-                          <AvatarFallback
-                            className="
-                              bg-[#006B7A]/10
-                              text-2xl font-bold
-                              text-[#006B7A]
-                            "
-                          >
-                            {initials}
-                          </AvatarFallback>
-                        </Avatar>
-
-                        <div
-                          className="
-                            absolute -bottom-1 -right-1
-                            flex h-8 w-8
-                            items-center justify-center
-                            rounded-full
-                            border-2 border-white
-                            bg-[#006B7A]
-                            text-white shadow-md
-                            dark:border-card
-                          "
-                        >
-                          <Camera className="h-4 w-4" />
-                        </div>
-                      </div>
-
-                      <div className="flex-1 text-center sm:text-left">
-                        <Input
-                          type="file"
-                          id="photo-upload"
-                          accept="image/*"
-                          className="hidden"
-                        />
-
-                        <Label
-                          htmlFor="photo-upload"
-                          className="
-                            inline-flex h-10
-                            cursor-pointer items-center
-                            justify-center
-                            rounded-lg
-                            bg-[#006B7A]
-                            px-5
-                            text-sm font-semibold
-                            text-white
-                            shadow-sm
-                            transition-all
-                            hover:bg-[#005866]
-                            hover:shadow-md
-                          "
-                        >
-                          <Upload className="mr-2 h-4 w-4" />
-                          Upload New Photo
-                        </Label>
-
-                        <p className="mt-2 text-xs text-muted-foreground">
-                          JPG, PNG or WEBP • Recommended 400×400px
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  {/* =================================================
-                      BASIC INFORMATION
-                  ================================================== */}
-                  <div>
-                    <div className="mb-5">
-                      <h3 className="text-sm font-semibold">
-                        Basic Information
-                      </h3>
-
-                      <p className="mt-1 text-xs text-muted-foreground">
-                        Update the information displayed on your profile.
-                      </p>
-                    </div>
-
-                    <div className="grid gap-5 md:grid-cols-2">
-                      {/* Name */}
-                      <div className="space-y-2">
-                        <Label htmlFor="displayName">Full Name</Label>
-
-                        <div className="relative">
-                          <User
-                            className="
-                              pointer-events-none
-                              absolute left-3 top-1/2
-                              h-4 w-4
-                              -translate-y-1/2
-                              text-[#006B7A]
-                            "
-                          />
-
-                          <Input
-                            defaultValue={user.data.name}
-                            id="displayName"
-                            placeholder="Enter your full name"
-                            className="
-                              h-11 rounded-lg pl-10
-                              focus-visible:border-[#006B7A]
-                              focus-visible:ring-[#006B7A]
-                            "
-                          />
-                        </div>
-                      </div>
-
-                      {/* Email */}
-                      <div className="space-y-2">
-                        <Label htmlFor="email">Email Address</Label>
-
-                        <div className="relative">
-                          <Mail
-                            className="
-                              pointer-events-none
-                              absolute left-3 top-1/2
-                              h-4 w-4
-                              -translate-y-1/2
-                              text-muted-foreground
-                            "
-                          />
-
-                          <Input
-                            id="email"
-                            value={user.data.email}
-                            disabled
-                            className="
-                              h-11 rounded-lg
-                              bg-muted/50
-                              pl-10 pr-10
-                            "
-                          />
-
-                          <LockKeyhole
-                            className="
-                              absolute right-3 top-1/2
-                              h-4 w-4
-                              -translate-y-1/2
-                              text-muted-foreground
-                            "
-                          />
-                        </div>
-
-                        <p className="text-xs text-muted-foreground">
-                          Contact admin to change your email address.
-                        </p>
-                      </div>
-
-                      {/* Experience */}
-                      <div className="space-y-2">
-                        <Label htmlFor="experience">Experience</Label>
-
-                        <div className="relative">
-                          <BriefcaseBusiness
-                            className="
-                              pointer-events-none
-                              absolute left-3 top-1/2
-                              h-4 w-4
-                              -translate-y-1/2
-                              text-[#006B7A]
-                            "
-                          />
-
-                          <Input
-                            id="experience"
-                            type="number"
-                            defaultValue={profile.experience ?? ""}
-                            placeholder="Years of experience"
-                            className="
-                              h-11 rounded-lg pl-10
-                              focus-visible:border-[#006B7A]
-                              focus-visible:ring-[#006B7A]
-                            "
-                          />
-                        </div>
-                      </div>
-
-                      {/* Status */}
-                      <div className="space-y-2">
-                        <Label>Account Status</Label>
-
-                        <div className="flex h-11 items-center rounded-lg border bg-muted/30 px-4">
-                          <span
-                            className={`mr-2 h-2.5 w-2.5 rounded-full ${
-                              isActive ? "bg-emerald-500" : "bg-red-500"
-                            }`}
-                          />
-
-                          <span className="text-sm font-medium">
-                            {user.data.status}
-                          </span>
-
-                          <Badge variant="outline" className="ml-auto text-xs">
-                            Read only
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <Separator />
-
-                  {/* =================================================
-                      BIO
-                  ================================================== */}
-                  <div className="space-y-2">
-                    <Label htmlFor="bio">About Me</Label>
-
-                    <textarea
-                      id="bio"
-                      defaultValue={profile.bio ?? ""}
-                      placeholder="Write something about yourself..."
-                      className="
-                        min-h-32.5
-                        w-full resize-none
-                        rounded-xl border
-                        bg-background
-                        px-4 py-3
-                        text-sm
-                        outline-none
-                        transition-all
-
-                        placeholder:text-muted-foreground
-
-                        focus:border-[#006B7A]
-                        focus:ring-2
-                        focus:ring-[#006B7A]/20
-                      "
-                    />
-
-                    <p className="text-xs text-muted-foreground">
-                      Tell people a little about your experience and skills.
-                    </p>
-                  </div>
-
-                  {/* =================================================
-                      SAVE
-                  ================================================== */}
-                  <div
-                    className="
-                      flex flex-col-reverse
-                      gap-4 border-t
-                      pt-6
-                      sm:flex-row
-                      sm:items-center
-                      sm:justify-between
-                    "
-                  >
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                      <ShieldCheck className="h-4 w-4 text-[#006B7A]" />
-                      Your profile information is securely stored.
-                    </div>
-
-                    <Button
-                      type="submit"
-                      className="
-                        h-11 w-full rounded-lg
-                        bg-linear-to-r
-                        from-[#006B7A]
-                        to-[#008A99]
-                        px-7
-                        font-semibold
-                        text-white
-                        shadow-md
-                        shadow-[#006B7A]/20
-                        transition-all
-
-                        hover:from-[#005866]
-                        hover:to-[#007887]
-                        hover:shadow-lg
-                        hover:shadow-[#006B7A]/25
-
-                        sm:w-auto
-                      "
-                    >
-                      Save Changes
-                    </Button>
-                  </div>
-                </form>
+                {/* update profile form  */}
+                <ProfileUPdateFrom
+                  name={user.data?.name}
+                  profilePhoto={user.data?.profilePhoto}
+                  initials={initials}
+                  email={user.data?.email}
+                  experience={user.data.profile.experience}
+                  status={user.data.status}
+                  isActive={isActive}
+                  bio={user.data.profile.bio}
+                />
               </CardContent>
             </Card>
           </TabsContent>

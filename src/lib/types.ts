@@ -79,10 +79,6 @@ export type SearchProp = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-
-
-
-
 export interface Category {
   id: string;
   name: string;
@@ -101,8 +97,8 @@ export interface ServiceData {
   price: number;
   city: string;
   area: string;
-  createdAt: string; 
-  updatedAt: string; 
+  createdAt: string;
+  updatedAt: string;
   category: Category;
 }
 
@@ -111,4 +107,56 @@ export interface CreateServiceResponse {
   status: number;
   message: string;
   data: ServiceData;
+}
+
+export type TechnicianOverViewType = {
+  myTotalServices: number;
+  myOrders: number;
+  myTotalRevenue: number;
+};
+
+export interface UserProfile {
+  id: string;
+  userId: string;
+  experience: string | null;
+  location: string | null;
+  isVerified: boolean;
+  avgRating: number;
+  totalReviews: number;
+  bio: string | null;
+  certificates: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserData {
+  id: string;
+  name: string;
+  email: string;
+  role: "CUSTOMER" | "TECHNICIAN" | "ADMIN" | string;
+  status: "ACTIVE" | "INACTIVE" | "BLOCKED" | string;
+  profilePhoto: string | null;
+  createdAt: string;
+  updatedAt: string;
+  profile: UserProfile;
+}
+
+export interface RegisterApiResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: UserData;
+}
+
+export interface UpdateProfileInterface {
+  success: boolean;
+  message: string;
+  status: number;
+  data?: {
+    id: string;
+    profilePhoto: string;
+    name: string;
+    experience: number;
+    bio: string;
+  } | null;
 }

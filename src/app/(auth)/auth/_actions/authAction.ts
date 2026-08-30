@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { RegisterApiResponse } from "@/lib/types";
 
 type LoginState = {
   success: boolean;
@@ -58,5 +59,44 @@ export const loginAction = async (
     }
   }
 
-  return result ;
+  return result;
+};
+
+export const registerActon = async (
+  prevState: RegisterApiResponse,
+  fromData: FormData,
+): Promise<RegisterApiResponse> => {
+  // name, email, password, profilePhoto
+
+  const name = fromData.get("name");
+  const email = fromData.get("email");
+  const password = fromData.get("password");
+  const profilePhoto = fromData.get("profilePhoto");
+
+  const payload = {
+    name,
+    email,
+    password,
+    profilePhoto,
+  };
+
+  const response = await fetch(
+    `${process.env.BACKEND_API_URL}/api/users/register`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    },
+  );
+
+  const data = await response.json();
+
+  return {
+    success: true,
+    status: response.status,
+    message: "Account created successfully!",
+    data: data,
+  };
 };

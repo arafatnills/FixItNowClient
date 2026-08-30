@@ -29,7 +29,7 @@ export default function ProfilePhotoUpload({
   user,
 }: ProfilePhotoUploadProps) {
   const initials =
-    user.data.name
+    user.data?.name
       ?.split(" ")
       .map((name) => name.charAt(0))
       .join("")
@@ -68,8 +68,8 @@ export default function ProfilePhotoUpload({
               "
             >
               <AvatarImage
-                src={user.data.profilePhoto}
-                alt={user.data.name}
+                src={user.data?.profilePhoto}
+                alt={user.data?.name}
                 className="object-cover"
               />
 

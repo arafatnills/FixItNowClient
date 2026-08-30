@@ -43,7 +43,7 @@ export function BookingStatusDropdown({
   loading = false,
   onStatusChange,
 }: BookingStatusDropdownProps) {
-  const cancelableStatus = ["PENDING", "COMPLETED", "CANCELLED", "INPROGRESS"];
+  const cancelableStatus = ["PENDING", "CANCELLED", "INPROGRESS"];
   const isAlreadyCancelled = status === BookingStatus.CANCELLED;
   return (
     <DropdownMenu>
