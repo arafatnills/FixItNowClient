@@ -1,22 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛠️ FixItNow - Client (Frontend)
 
-## Getting Started
+## 📖 Project Overview
+**FixItNow** is a modern, highly responsive web application designed to instantly connect users with reliable repair and maintenance professionals. Whether it's plumbing, electrical work, or appliance repair, this platform offers a seamless and intuitive experience from browsing services to booking and making secure payments.
 
-First, run the development server:
+## 🎯 The Problem It Solves
+Finding trustworthy and skilled mechanics or repair services during emergencies is often a frustrating and time-consuming process. Users frequently face issues like non-transparent pricing, unverified professionals, and scheduling hassles. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**FixItNow solves these problems by:**
+- 🔍 Providing a unified, easy-to-navigate platform to find categorized repair professionals.
+- 📅 Offering a real-time booking and scheduling system.
+- 💳 Ensuring smooth and secure transactions (via Stripe integration on the backend).
+- 📊 Giving users and admins a beautiful, interactive dashboard to track service history, analytics, and profiles.
+
+## ✨ Key Features
+- **Secure Authentication:** JWT-based login and registration system.
+- **Interactive Dashboards:** Stunning data visualization and analytics using Recharts.
+- **Dynamic UI/UX:** Engaging user experience with smooth animations powered by Framer Motion.
+- **Modern Design:** A flawless, accessible UI across all devices built with Tailwind CSS and Shadcn UI.
+- **Media Management:** Profile and service image handling via Cloudinary.
+
+## 💻 Technologies Used
+Here are the major technologies and libraries used in this frontend project:
+
+* **Framework & Core:** Next.js (v16), React (v19), TypeScript
+* **Styling & UI Components:** Tailwind CSS, Shadcn UI, Radix UI
+* **Animations:** Framer Motion (Motion), Tailwind Animate
+* **Charts & Data Visualization:** Recharts
+* **Icons:** Lucide React, React Icons
+* **Authentication:** JSON Web Token (JWT)
+* **Package Manager:** pnpm
+
+## 🚀 Getting Started
+
+Follow these steps to set up and run the project locally on your machine.
+
+### Prerequisites
+Make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [pnpm](https://pnpm.io/)
+
+### Installation & Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/arafatnills/FixItNowClient.git](https://github.com/arafatnills/FixItNowClient.git)
+2. **Navigate to the project directory:**
+
+```Bash
+cd fixitnow-client
+```
+3. **Install the dependencies:**
+
+```Bash
+pnpm install
+Environment Variables:
+Create a .env.local file in the root directory and add your necessary API keys (e.g., Backend URL, Cloudinary keys).
+```
+4. **Run the development server:**
+
+```Bash
+pnpm run dev
+View the App:
+Open http://localhost:3000 with your browser to see the result.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Folder Stature
 
 ```
 ├── public/
