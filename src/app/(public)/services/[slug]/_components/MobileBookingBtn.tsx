@@ -14,7 +14,7 @@ const MobileBookingBtn = async ({
   const user = await getMe();
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex lg:hidden items-center justify-between ">
         <div className="">
           <h1 className="text-xl font-bold">Booking a Service</h1>
           <h3 className="font-extrabold">{formattedPrice}</h3>

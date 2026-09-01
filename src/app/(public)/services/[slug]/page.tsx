@@ -7,7 +7,6 @@ import ServiceAbout from "./_components/ServiceAbout";
 import ServiceSpecs from "./_components/ServiceSpecs";
 import ServiceHowItWorks from "./_components/ServiceHowItWorks";
 import DesktopBookingCard from "./_components/DesktopBookingCard";
-import { getMe } from "@/services/getMe";
 import MobileBookingBtn from "./_components/MobileBookingBtn";
 
 const formatPrice = (price: string | number) =>
@@ -45,7 +44,7 @@ export async function generateMetadata({
 export default async function ServiceDetailsPage({ params }: PageProps) {
   const { slug } = await params;
   const service = await getSingleService(slug);
-  const user = await getMe();
+  // const user = await getMe();
 
   if (!service) {
     return <div className="">not found</div>;
