@@ -60,13 +60,17 @@ export async function proxy(request: NextRequest) {
     (r) => pathName === r || (r !== "/" && pathName.startsWith(`${r}/`)),
   );
   if (!decodedAccessToken && !isPublic) {
-    const redirect = NextResponse.redirect(new URL("/auth/login", request.url));
+    const loginURL = new URL("/auth/login", request.url)
+    loginURL.searchParams.set('redirectTo', pathName + request.nextUrl.search)
+    const redirect = NextResponse.redirect(loginURL);
     redirect.cookies.delete("accessToken");
     return redirect;
   }
 
   if (!role && !isPublic) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    const loginURL = new URL("/auth/login", request.url)
+    loginURL.searchParams.set('redirectTo', pathName + request.nextUrl.search)
+    return NextResponse.redirect(loginURL);
   }
 
   //! set token in cookie

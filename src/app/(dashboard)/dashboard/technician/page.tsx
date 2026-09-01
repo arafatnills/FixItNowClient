@@ -4,7 +4,7 @@ import TechnicianOverviewChart from "./_components/TechnicianOverviewChart";
 
 export default async function DashboardPage() {
   const response = await getTechnicianStats();
-  console.log(response);
+
 
   return (
     <div className="p-4 md:p-8 w-full container mx-auto ">
